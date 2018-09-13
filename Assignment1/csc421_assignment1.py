@@ -8,11 +8,15 @@ Current dependencies: Python 3.6.5
 import sys
 from collections import OrderedDict
 
+# Sucessor states: Modify one jug at a time; either fill, pour, or transfer the contents of one jug into another
+# Maybe not the best solution since the branching factor is looking a bit more complicated than it has to be perhaps
+
 # A state can be modified by an action, and must return another state
 # The goal state is when we have 1 liter left over in a jug
 class EnvState():
 
 	# Class initializer
+
 	def __init__(self, jug1, jug2, jug3):
 		print("Instantiating a new state")
 
@@ -30,7 +34,7 @@ class EnvState():
 		for index, jug in enumerate(self.water_jugs):
 			print(jug.name, jug.num_gallons)
 
-	# Check to see if the current state is equivalent to the goal state
+	# Check to see if the current state is equivalent to the goal state (1 gallon remaining in any one of the 3 jugs)
 	def goal_check(self):
 		for index, jug in enumerate(self.water_jugs):
 			if jug.num_gallons == 1:
@@ -41,14 +45,15 @@ class EnvState():
 class WaterJug():
 
 	# Class initializer
-	# The attributes below are specific to each instance of a WaterJug object
+
 	def __init__(self, name, max_capacity, num_gallons):
 		print("\nInstantiating a new WaterJug() object.\n")
 		self.name = name
 		self.max_capacity = max_capacity
 		self.num_gallons = num_gallons
 
-	# Class functions are defined below
+	# Class Functions
+
 	def get_num_gallons(self):
 		print('\n%s has %s gallons in it.' % (self.name, self.num_gallons))
 
@@ -65,7 +70,7 @@ class WaterJug():
 		else:
 			print("%s is already full" % self.name)
 
-	def transfer_water_to_other_jug(self, other_jug):
+	def transfer_all_water_to_other_jug(self, other_jug):
 		# Check if other jug is a jug object before proceeding
 		if isinstance(other_jug, WaterJug):
 			print("\nTransfering %s gallons from %s to %s" % (str(self.num_gallons), self.name, other_jug.name))
@@ -75,6 +80,17 @@ class WaterJug():
 			if other_jug.num_gallons > other_jug.max_capacity:
 				other_jug.num_gallons = other_jug.max_capacity
 			print("%s now contains %d gallons" % (other_jug.name, other_jug.num_gallons))
+		else:
+			print("Incorrect params")
+			sys.exit(0)
+
+	def fill_other_jug_from_self(self, other_jug):
+		# Check if other jug is a jug object before proceeding
+		if isinstance(other_jug, WaterJug):
+			print("\nTransfering water from %s to fill %s" % (str(self.num_gallons), self.name, other_jug.name))
+			if self.num_gallons > (other_jug.max_capacity - other_jug.num_gallons):
+				self.num_gallons -= other_jug.max_capacity - other_jug.num_gallons
+				other_jug.num_gallons += other_jug.max_capacity - other_jug.num_gallons
 		else:
 			print("Incorrect params")
 			sys.exit(0)
@@ -93,7 +109,7 @@ def main(argv):
 	# test_jug2.get_num_gallons()
 	# test_jug3.get_num_gallons()
 	#
-	# test_jug1.transfer_water_to_other_jug(test_jug2)
+	# test_jug1.transfer_all_water_to_other_jug(test_jug2)
 
 
 if __name__ == "__main__":

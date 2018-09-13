@@ -47,7 +47,7 @@ class WaterJug():
 		print('\n%s has %s gallons in it.' % (self.name, self.num_gallons))
 
 	def pour_jug_on_groud(self):
-		if self.num_gallons >= 0:
+		if self.num_gallons > 0:
 			self.num_gallons = 0
 		elif self.num_gallons == 0:
 			print("Cannot pour water from an empty jug")

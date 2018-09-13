@@ -9,7 +9,7 @@ import sys
 from collections import OrderedDict
 
 class Tree():
-
+	# Model a parent and child relationship  between EnvStates
 	def __init__(self):
 		print("This tree will contain EnvState objects")
 
@@ -31,7 +31,7 @@ class EnvState():
 		self.water_jugs.append(jug2)
 		self.water_jugs.append(jug3)
 		print(self.water_jugs)
-		
+
 		self.sucessor_states = []
 
 	# Class Functions
@@ -52,7 +52,6 @@ class EnvState():
 		# If the goal is not yet met
 		if not self.goal_check():
 			print("Generating all states from current state...")
-
 			# Return a list of sucessor states
 
 # A water jug object is held within a state attribute list called water_jugs
@@ -103,8 +102,8 @@ class WaterJug():
 		if isinstance(other_jug, WaterJug):
 			print("\nTransfering water from %s to fill %s" % (str(self.num_gallons), self.name, other_jug.name))
 			if self.num_gallons > (other_jug.max_capacity - other_jug.num_gallons):
-				self.num_gallons -= other_jug.max_capacity - other_jug.num_gallons
-				other_jug.num_gallons += other_jug.max_capacity - other_jug.num_gallons
+				self.num_gallons -= (other_jug.max_capacity - other_jug.num_gallons)
+				other_jug.num_gallons += (other_jug.max_capacity - other_jug.num_gallons)
 			else:
 				print("Current jug does not have enought water to fill other jug.")
 		else:

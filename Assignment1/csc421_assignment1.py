@@ -16,7 +16,6 @@ class EnvState():
 	def __init__(self, jug1, jug2, jug3):
 		print("Instantiating a new state")
 
-
 		# Track the water jug's contents in a state instance, self.water_jugs is a list that contains 3 jugs at each state
 		self.water_jugs = []
 		self.water_jugs.append(jug1)
@@ -30,6 +29,13 @@ class EnvState():
 	def print_state(self):
 		for index, jug in enumerate(self.water_jugs):
 			print(jug.name, jug.num_gallons)
+
+	# Check to see if the current state is equivalent to the goal state
+	def goal_check(self):
+		for index, jug in enumerate(self.water_jugs):
+			if jug.num_gallons == 1:
+				return True
+		return False
 
 # A water jug object is held within a state
 class WaterJug():
@@ -65,11 +71,10 @@ class WaterJug():
 			print("\nTransfering %s gallons from %s to %s" % (str(self.num_gallons), self.name, other_jug.name))
 			# Transfer
 			other_jug.num_gallons += self.num_gallons
-			# Catch the case of water overflow when pouring an amount larger than the max_capacity into the other jug
+			# Catch the case of water overflow when pouring an amount larger than the max_capacity of other_jug into the other jug
 			if other_jug.num_gallons > other_jug.max_capacity:
 				other_jug.num_gallons = other_jug.max_capacity
 			print("%s now contains %d gallons" % (other_jug.name, other_jug.num_gallons))
-
 		else:
 			print("Incorrect params")
 			sys.exit(0)

@@ -8,6 +8,11 @@ Current dependencies: Python 3.6.5
 import sys
 from collections import OrderedDict
 
+class Tree():
+
+	def __init__(self):
+		print("This tree will contain EnvState objects")
+
 # Sucessor states: Modify one jug at a time; either fill, pour, or transfer the contents of one jug into another
 # Maybe not the best solution since the branching factor is looking a bit more complicated than it has to be perhaps
 
@@ -91,6 +96,8 @@ class WaterJug():
 			if self.num_gallons > (other_jug.max_capacity - other_jug.num_gallons):
 				self.num_gallons -= other_jug.max_capacity - other_jug.num_gallons
 				other_jug.num_gallons += other_jug.max_capacity - other_jug.num_gallons
+			else:
+				print("Current jug does not have enought water to fill other jug.")
 		else:
 			print("Incorrect params")
 			sys.exit(0)
@@ -110,7 +117,6 @@ def main(argv):
 	# test_jug3.get_num_gallons()
 	#
 	# test_jug1.transfer_all_water_to_other_jug(test_jug2)
-
 
 if __name__ == "__main__":
 	main(sys.argv)

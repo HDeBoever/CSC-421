@@ -13,14 +13,26 @@ from collections import OrderedDict
 class EnvState():
 
 	# Class initializer
-	def __init__(self):
+	def __init__(self, jug1, jug2, jug3):
 		print("Instantiating a new state")
+
 
 		# Track the water jug's contents in a state instance, self.water_jugs is a list that contains 3 jugs at each state
 		self.water_jugs = []
+		self.water_jugs.append(jug1)
+		self.water_jugs.append(jug2)
+		self.water_jugs.append(jug3)
+
+		print(self.water_jugs)
+
+	# Class Functions
+
+	def print_state(self):
+		for index, jug in enumerate(self.water_jugs):
+			print(jug.name, jug.num_gallons)
 
 # A water jug object is held within a state
-class WaterJug(object):
+class WaterJug():
 
 	# Class initializer
 	# The attributes below are specific to each instance of a WaterJug object
@@ -56,7 +68,6 @@ class WaterJug(object):
 			# Catch the case of water overflow when pouring an amount larger than the max_capacity into the other jug
 			if other_jug.num_gallons > other_jug.max_capacity:
 				other_jug.num_gallons = other_jug.max_capacity
-
 			print("%s now contains %d gallons" % (other_jug.name, other_jug.num_gallons))
 
 		else:
@@ -66,15 +77,18 @@ class WaterJug(object):
 # The main function serves as a test harness for the water jug class instances
 def main(argv):
 
-	test_jug1 = WaterJug('12_gallon_jug', 12, 12)
-	test_jug2 = WaterJug('8_gallon_jug', 8, 0)
-	test_jug3 = WaterJug('3_gallon_jug', 3, 0)
+	jug1 = WaterJug('12_gallon_jug', 12, 0)
+	jug2 = WaterJug('8_gallon_jug', 8, 0)
+	jug3 = WaterJug('3_gallon_jug', 3, 0)
 
-	test_jug1.get_num_gallons()
-	test_jug2.get_num_gallons()
-	test_jug3.get_num_gallons()
+	initial_state = EnvState(jug1, jug2, jug3)
+	initial_state.print_state()
 
-	test_jug1.transfer_water_to_other_jug(test_jug2)
+	# test_jug1.get_num_gallons()
+	# test_jug2.get_num_gallons()
+	# test_jug3.get_num_gallons()
+	#
+	# test_jug1.transfer_water_to_other_jug(test_jug2)
 
 
 if __name__ == "__main__":

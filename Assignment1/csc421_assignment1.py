@@ -30,23 +30,32 @@ class EnvState():
 		self.water_jugs.append(jug1)
 		self.water_jugs.append(jug2)
 		self.water_jugs.append(jug3)
-
 		print(self.water_jugs)
+		
+		self.sucessor_states = []
 
 	# Class Functions
 
 	def print_state(self):
 		for index, jug in enumerate(self.water_jugs):
-			print(jug.name, jug.num_gallons)
+			print("Name: %s\t\tCapacity: %dgallons\t\tContents: %d gallons" % (jug.name, jug.max_capacity, jug.num_gallons))
 
 	# Check to see if the current state is equivalent to the goal state (1 gallon remaining in any one of the 3 jugs)
 	def goal_check(self):
 		for index, jug in enumerate(self.water_jugs):
 			if jug.num_gallons == 1:
+				print("Solution found!")
 				return True
 		return False
 
-# A water jug object is held within a state
+	def generate_all_possible_next_states(self):
+		# If the goal is not yet met
+		if not self.goal_check():
+			print("Generating all states from current state...")
+
+			# Return a list of sucessor states
+
+# A water jug object is held within a state attribute list called water_jugs
 class WaterJug():
 
 	# Class initializer
@@ -102,7 +111,7 @@ class WaterJug():
 			print("Incorrect params")
 			sys.exit(0)
 
-# The main function serves as a test harness for the water jug class instances
+# The main function serves as a test harness for class instances
 def main(argv):
 
 	jug1 = WaterJug('12_gallon_jug', 12, 0)

@@ -24,10 +24,10 @@ class WaterJug(object):
 
 	# Class initializer
 	# The attributes below are specific to each instance of a WaterJug object
-	def __init__(self, name, capacity, num_gallons):
+	def __init__(self, name, max_capacity, num_gallons):
 		print("\nInstantiating a new WaterJug() object.\n")
 		self.name = name
-		self.max_capacity = capacity
+		self.max_capacity = max_capacity
 		self.num_gallons = num_gallons
 
 	# Class functions are defined below
@@ -42,20 +42,22 @@ class WaterJug(object):
 
 	def fill_from_tap(self):
 		# Filling jug from the faucet
-		if self.num_gallons < self.capacity:
-			self.num_gallons = self.capacity
+		if self.num_gallons < self.max_capacity:
+			self.num_gallons = self.max_capacity
 		else:
 			print("%s is already full" % self.name)
 
 	def transfer_water_to_other_jug(self, other_jug):
 		# Check if other jug is a jug object before proceeding
 		if isinstance(other_jug, WaterJug):
-			print("\nTransfering water from %s to %s" % (self.name, other_jug.name))
+			print("\nTransfering %s gallons from %s to %s" % (str(self.num_gallons), self.name, other_jug.name))
 			# Transfer
 			other_jug.num_gallons += self.num_gallons
-			# Catch the case of water overflow when pouring an amount larger than the capacity into the other jug
-			if other_jug.num_gallons > other_jug.capacity:
-				other_jug.num_gallons = other_jug.capacity
+			# Catch the case of water overflow when pouring an amount larger than the max_capacity into the other jug
+			if other_jug.num_gallons > other_jug.max_capacity:
+				other_jug.num_gallons = other_jug.max_capacity
+
+			print("%s now contains %d gallons" % (other_jug.name, other_jug.num_gallons))
 
 		else:
 			print("Incorrect params")
@@ -64,7 +66,7 @@ class WaterJug(object):
 # The main function serves as a test harness for the water jug class instances
 def main(argv):
 
-	test_jug1 = WaterJug('12_gallon_jug', 12, 0)
+	test_jug1 = WaterJug('12_gallon_jug', 12, 12)
 	test_jug2 = WaterJug('8_gallon_jug', 8, 0)
 	test_jug3 = WaterJug('3_gallon_jug', 3, 0)
 

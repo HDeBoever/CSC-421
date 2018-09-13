@@ -1,0 +1,414 @@
+Introduction to AI:
+
+An introduction: the Turing test
+
+Can a machine pretend to be a human? Not yet.
+
+A Chess program can mimic intelligence by executing a large amount of computation i.e. chess engines that can play at a grand master level.
+The goal of AI is to build machines that think rationally (as the human would define such a construct).
+
+Topics that this course will cover:
+
+- Searching
+- Games
+- Logic
+- Reasoning under certainty
+- Machine Learning
+
+This course focuses more on neural networks, whereas SENG 474 focuses more on algorithms.
+Both courses have about 15% overlap.
+
+The notion of an agent. An agent is simply a computer program that get perception data from the defined environment, and reacts accordingly.
+Typically the complexity of the lookup table is an exponential function; not always feasible. A reflex agent can solve the complexity problem
+but they can easily get stuck in loops. The reflex agents don't typically store information about environment state within them. This course will focus
+on a subset of agents that store internal states.
+
+Searching:
+
+Systematic exploration of alternatives for reaching a goal i.e. pathfinding algorithms, maze solvers etc..
+Search can be expressed as path finding in graphs,
+but graphs can be more abstract. The agent must hold information about the current environment, and the
+possible environments that would result from the
+actions of the agent. Then comparisions can be made between the possible en states in order to drive the agent's
+following step. Graphs are useful since
+many roblems can be modelled as graphs.
+
+In - Class - Example: The 8-puzzle. Store the states, the possible actions, the goal
+test, and the cost of each path that the agent finds.
+After generating the possible states from the initial state, perform a goal test on each path.
+The cost of a particular path is defined by
+distance nultiplied by an arbitrary damping factor.
+
+Heuristic searches to render certain kinds of logics much
+more efficient to do i.e. the ability perform much deeper searches down certain paths.
+
+Logic:
+
+Humans are, among other things, information processors.
+Our strength is the ability to represent and formulate patterns.
+Try to link logical rules to the schema of a given world in order to allow logically
+deterministic computations to describe that world within a computer.
+
+Sounds patterns vs. unsound patterns  i.e. good logic vs. faulty logic
+
+Formal logic for
+encoding information and their legal transformations, how do you make real world constructs understandable by a computer.
+
+Aside: The Huntington Equation and the Robbins equation
+
+Robbins:
+n(n(x) + y) + n(x + n(y)))
+
+Express propositions into logical forms and back into human readable language
+after computation has taken place and a result is obtained.
+
+Representing knowledge:
+
+Representing knowledge has to do with being able to derive diagnostic rules about
+the environment around you before encoding those rules. Establishing
+known relationships in causal relations between entities.
+
+In a mathematical sense, we are able to establish a degree of certainty or a degree fo belief of the rules in place based on sochastic conclusions.
+
+Bayesian networks
+are ideal for reprensting these kinds of probabilities in the framework of AI since we can model the agregate effect of probabilities on parent and child variables.
+
+Typically a Bayesian network consists of DAGs (Directed Acyclic Graphs) since infinite loops are not allowed, and since certain variables can be defined
+as independant from others.
+
+e.g. Bayesian Network from slides.
+
+Computing the compounding of probablities as they evolve through a DAG. The program AIspace can do this for us given states we define.
+
+Getting a computer to "learn"; and intro to machine learning:
+The motivation to do machine learning is to let the machine itself come up
+with heuristics that determine the world around it without very complex human inputs.
+Imagine that I am going to predict wether or not my
+neighbour is goin to drive to work.
+
+Relies on these variables:
+
+	- Temp
+	- Precip
+	- Day
+	- Clothes
+
+each combination of these attributes results
+in an end goal, walk or drive
+
+This is an example of supervised machine learning where statistics are kept to record past occurences.
+Neural nets have an efficient way to store and
+retrieve the relationships in data to determine the probability of a certain next state.
+Implicit averaging can narrow the error in predictions given
+by neural networks trained by supervised learning methods.
+
+To deal with previously unseen cases, we can employ generalizations on the meta data found among the defined variables.
+The question of determining which
+generalization is better is qualitative with tests that are driven by environmental norms. These generalizations are called classifiers.
+Tabular data will
+be mostly dealt with in Data Mining SENG 474.
+
+Most of this class is oriented around computer vision also with a module focused on text recognition.
+Image recognition is known as a classification problem.
+Each classifier is presented with labelled data, and from there the program can tell you what classes are in the
+photos after a training session. Training takes
+a lot of time and computational power. Images can be represented as vectors in computer terms.
+Operations can be then undertaken on these image instances.
+
+We can store the outputs of these operations in what we calla neural net.
+
+Each input goes into each neuron.
+Each neuron is associated with a particular weight, and that weight is multiplied by the input variable values for each neuron.
+
+A neural network is defined as such:
+
+	SUM(input_i*weight_i) + bias for each class.
+
+The more layers present, the more complex the computations get, but the accuracy gets better. A loss function enables us to nudge weights.
+Compare the predicted vector
+with the real vectors by normalizing the predicted vector. After normalization the scales are more comparable and the resultant vector's sum is 1.
+The loss function is
+defined as -ln(max(normalized_vector)).
+
+In theory, one must navigate the loss function to find a minimum, but in practice, there is enough data to
+run networks many times to render this optimization
+unessecary. Use GPU operations on the cloud!
+
+
+
+Self Notes Chapter 1:
+
+A rational agent is one that acts so as to acheive the best outcome or, wher there is uncertainty, the best expected outcome (often defined by a pre-set goal).
+Making correct inferences is sometimes part of being a rational agent, because one way to act rationally is to reason logically to the conclusion given
+that a given action will acheive one's goals and then to act on that conclusion. On the other had, correct inference is not all of rationality; in some situations
+, there is no provably correct thing to do, but an action must nevertheless be undertaken. There are no ways of acting that could be said to solve such an infference.
+
+This book focuses on the general principles of rational agents and on the componenets that construct them.
+
+NB. Acheiving perfect rationality ie. always doing the right thing, is not feasiblein complicated environments as the computational demands are simply too elevated.
+This can be alleviated in part by a concept we call limited rationality -- acting appropriately when there is not enough time to do all the computations necessary.
+
+Free will is simply the way that the perception of available choices appears to the choosing entity. Only by understanding how actions are justified can we begin
+to understand how to build an agent whose actions are justifiable (or rational).
+
+Chapter 2 Notes:
+
+An agent can be perceived as any entity that is able to capture information about its environment through sensors, and acting upon the sensor input through
+actuators.
+
+In a general sense, an agent's choice of action at any given instant can depend on the entire precept sequence observed to date, but not on anything which the agent has yet to perceive.
+
+Agent behaviour can be mapped to an agent funciton in mathematical terms. This function maps any given precept sequence to an action. These actions
+can be tabulated into a theoretically infinte table, unless the programmers place a bound on the length of precept sequences we want to consider.
+Internally, the agent functions are part of the agent program.
+
+Vaccuum cleaner example.
+
+Good agents can alter the environment states through a sequence of actions that are hopefully desireable in the eyes of the agent's end goals.
+As a general rule, it is better to design performance measures according to what one actually wants in the environment, rather than according
+to how one thinks the agent should behave.
+
+Rationality at any given time depends on these four precepts:
+- The performance measure that defines the criterion of success
+- The agent's prior knowledge of the environment
+- The actions that the agent can perform
+- The agent's percept sequence to date
+
+This leads to the definition of a rational agent: For each possible percept sequence, a rational agent should select an action that is
+expected to maximize its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent posesses.
+
+Rationality maximizes expected performance, whereas perfection (which requires omniscience i.e.. impossible) maximizes actual performance.
+The extent that an agent relies on the prior knowledge of its designer rather than on its own precepts is called autonomy. A rational agent
+should be autonomous- it should learn what it can to compensate for partial or incorrect prior knowledge.
+
+6:06 PM 2018-09-07
+
+Chapter 2.3.1 Specifying the task environment
+
+To discuss the rationality of an agent we have to explicitly define the following 4 parameters:
+
+1. Performance (define a performance measure; what qualities do you want your agent to optimize, or what functions should your agent be able to do autonomously)
+2. Environment (define the bounds of the environment)
+3. Actuators   (what actuators will the agent possess to interact with the defined environment)
+4. Sensors     (what sensors can the agent use to get cues from the defined environment)
+
+In designing an agent, the utmost care to defining the environment must be taken since the agent will base its actions on the feedback of sensors.
+The properties of a task environment should contain as much relevant information as possible that would on the one hand mimic the operating environment at
+hand, as well as the data and information required for the agent to behave accordingly in its environment.
+
+A fully observable vs. a partially observable environment
+
+If an agent's sensors give it access to the complete state of the environment at each time step, then the environment is said to be fully observable. A task
+environment is fully observable if the sensors detect all aspects that are relevant to the choice of an action; relevance depends on the performance measure set
+out by the programmers. A fully observable environment is sometimes advantageous since it does not require the agent to keep track of the world in cache or
+local memory since everything can be readily sensed.
+
+Conversely, an environment may be partially observable because of noisy data and inaccurate sensors used to keep track of the world, or simply
+because parts of the state of the environment cannot be detected by the sensors at the current time step. In the case an agent has no sensors,
+the environment is said to be unobservable.
+
+Single-agent vs. Multi-agent
+
+On the surface, single agent can be seen as one agent playing sudoku alone whereas multi agent could be seen as 2 agents playing Go against one another.
+However, we can also make the distinction within a multi agent case for a cooperative multiagent environment (network of self driving cars, etc.),
+or a competitive multiagent environment (chess, etc.). Other distinctions can be made between partially competitive and partially cooperative modes
+within an agent's acting schema with regards to other agents. For example, communication between agents often only arises in multi-agent environments
+i order to formulate "rational" behaviour. In competitive environments, randomness can be seen as an optimization  and therefore rational since
+it avoids the common pitfalls  or predictability.
+
+This brings us to Determininistic vs. Stochastic.
+
+An environment is said to be deterministic if the complete next state of the environment can be determined by the agent given the agent's actions in the next
+time step; i.e.. predictable. If the complete state is not known, then the environment is said to be stochastic. In a stochastic environment,
+uncertainties can generally be quantified in terms of probabilities.
+
+Episodic vs. Sequential environments
+
+In an episodic environment, the agent's experience is divided into atom episodes. In each episode, the agent receives a percept and then performs a single
+action. The actions of the next episode are not influenced by the actions of the previous episode.
+In a sequential environment, the current action could/has an effect on all future actions, and thus could affect future decisions. The agent is
+required to think ahead in a sequential environment; unlike an episodic environment where that is not required.
+
+Static vs. Dynamic environments
+
+If the environment can change while the agent is deliberating, it is dynamic. In static environments, the agent does not have to worry about the passing
+of time in order to come up with a decision. If the environment itself does not change with the passage of time per percept sequence, but the agent's
+performance score does, the environment is said to be semi-dynamic. Chess when played with a clock is a semi-dynamic environment; taxi driving is
+a dynamic environment; crossword puzzles or sudoku is a static environment.
+
+Discrete vs. Continous
+
+This distinction applies to the state of the environment, how time is handled, and to the percepts and possible actions of the agent. Chess is a finite number
+of distinct states and thus it has a discrete and finite amount of states. Taxi driving on the other hand is a continuous time and state problem.
+
+Chapter 2.4: The structure of agents
+
+The job of AI is to define agent programs which maps agent agents based on percepts. In a looser sense the agent = architecture + program
+The agent programs must have the sensors and hardware in place to implement the actions demanded of it by the programmer. i.e. Walk action would
+require legs as hardware to have been implemented. Take the current precepts from sensors as the input, and return an action in the actuators as an output.
+The difference between an agent program and the agent function is that the agent program takes the current percept as the input whereas the agent function
+takes the entire percept history as an input.
+
+e.g. pseudocode for a table driven agent
+
+function table_driven_agent(percept)
+		persistent: percepts, a sequence, initially empty
+								table,  a table of actions, indexed by percept sequences, initially fully specified.
+		percepts.append(percept)
+		action = lookup(percepts, table)
+		return action
+
+Due to the insane amount of items required to be in the table for useful real world purposes, the table driven agent construction methods are not viable
+on the larger scale of things. No physical agent will have the space to store the table require to produce actions for chess for instance (10^150 possibilities).
+
+	4 kinds of basic agent programs
+1. Simple reflex agents
+2. Model-based reflex agents
+3. Goal-based agents
+4. Utility-based agents
+
+Reflex Based Agents:
+
+They are the simplest kind of agent. These agents select pre defined actions based solely on the current percept, ignoring the rest of the percept history.
+The actions are based on what are called condition-action-rules.
+
+e.g. An agent program for the simple vacuum reflex agent:
+
+function reflex_vacuum_agent([location, status])
+		if status == Dirty then return suck
+		elif location == A return Right
+		elif location == B return Left
+
+The generalized form of a reflex agent:
+
+function simple_reflex_agent(percept)
+		persistent: rules, a set of condition-action rules
+
+		state =  interpret_input(percept)
+		rule = rule_match(state, rules)
+		action = rule.action
+
+		return action
+
+The advantage of simple reflex agents is that their implementation is relatively simple, but the downside is that their intelligence is very limited.
+It is not suited to adapting its behaviour to dynamic states and it relies on previously defined actions that are mapped to constant environment
+states. It also assumes that a decision can be made based on the current percept and therefore assumes a fully observable environment at each time step.
+As a result, infinite loops are often unavoidable for simple reflex agents operating in partially observable environments.
+Escape from infinite loops can be done if the agent is able to randomize its actions. In many cases a randomized reflex agent will outperform a deterministic
+reflex agent, but the downside of this is that randomized actions in a single agent environment are seldom rational. There are better deterministic single agent
+methods that randomizing, event thought randomizing is a good trick to get around infinite loops.
+
+September 12th 2018: Lecture Notes
+
+Searching for solutions to problems where problems can be things represented by graphs.
+Conceptual backbone of AI. The approaches can be explored systematically using search algorithms.
+Uninformed algorithms don't use any background knowledge of the domain, finds the optimal solution or any solution.
+Informed algorithms use background knowledge of the domain to make the search faster, finds the optimal solution or any solution.
+
+A 'solution' is not necessarily the optimal solution.
+
+A state is nothing else than a vertex in a graph. A search node is a node in a search tree. The nodes can be seen as book - keeping structures which internally hold references to a state.
+The edges of a graph are the actions between states. The problem is another class, which contains an initial state and what actions can be taken in the environment.
+The problem class defines the actions functions and the successor functions. The successor functions define the endpoints for certain actions.
+The goal test checks the current state and returns a boolean based on the equality of the current state with the end goal state.
+The problem also defines a step cost function. The step cost function takes 2 states, and determines the cost of going from state to state.
+The solution is a path of states that ends up in the goal state, but the optimal solution is a path that ends up at the goal state with the least cost incurred.
+
+defining the Romania Road map problem in Java:
+
+public abstract class Problem{
+	public Object initialState;
+	abstract boolean goal_test(ObejctState);
+	abstract Set<Object> get_sucessors(ObjectNames);
+	abstract double stepCost(state1, state2);
+}
+
+8-queens problem examples etc.
+
+A state is a representation of a physical configuration
+A node contains state, parent node, action, path cost, and depth. The frontier is defined as the set of nodes that have not been yet expanded.
+If the frontier does not contain the solution, then the current state is "FAIL".
+
+Pseudocode Implementation
+
+Tree Search(problem) returns solution of failure:
+	Initialize frontier with a node for the initial state
+	while true
+		if frontier is empty
+			return fail
+		else:
+			node = frontier.remove()
+			if problem.isGoal(n.state)
+				return node
+			else:
+				expand node, add successor nodes to frontier
+
+Tree Search vs. Graph Search
+Graph search keeps track of nodes that have already been visited as an optimization.
+
+Search Strategies and metrics for good searching algorithms:
+	Completeness:
+		Does your algorithm terminate or not? Does it find a solution?
+	Time Complexity
+		Is the runtime reasonable?
+	Space Complexity
+		Is it space efficient?
+	Optimality
+		Does it find the optimal solution?
+
+	What is your maximum branching factor and was is the depth of the a/the best solution.
+	b is max branching factor
+	d is depth of the best solution (shallowest solution)
+	m is max depth
+
+	Breadth-First-Search:
+
+	FIFO queue used. Puts all newly generated successors at the end of the queue, which means that the shallow nodes are expanded before the deeper ones.
+		i.e. pick from the frontier to expand the shallowest unexpanded node.
+
+	Completeness: Yes if b is finite
+	Time complexity: O(b^(d+1))
+	Space: O(b^(d+1))
+	Optimality: Yes, if cost is a non-decreasing function of depth. depth vs. cost
+
+	Uniform Cost Search:
+
+	Expand the least-cost unexpanded node. Expand the nodes in order of increasing path costs. Therefore the first goal node selected is the optimal solution.
+	The implementation is the same as tree search, but the frontier list is implemented as a priority queue optimized on cost.
+
+	Complete: Yes, if step cost is strictly positive.
+	Time: number of nodes with g <= cost of optimal solution, O(b^(C*/epsilon)) where C* is the cost of the optimal solution and some of their children where epsilon is close to 0+.
+	Space: Number of nodes with g<= cost of optimal solution, O(b^(C*/epsilon)) and some of their children
+	Optimal: Yes, nodes expanded in increasing order of g(n)
+
+	Depth-First-Search:
+	Expand deepest unexpanded node. Use a LIFO queue, put successors at the front.
+
+	Complete: Not complete without keeping a history.
+	Time complexity: O(b^(d+1)).
+	Space Complexity: b*m (linear space complexity).
+	Optimal: No, better solutions can be missed.
+
+	Depth-Limited-Search:
+	Naïve algorithm
+
+	Iterative-Deepening-Search:
+
+	Complete: Yes!
+	Time: (d+1)*b_0
+	Space: O(b*d)
+	Optimal: Yes
+
+	Class problem:
+	Model the water jugs problem as a state graph diagram, and implement it in code.
+
+	Robot.txt
+		 (.)
+		__|___									 _________________
+	<([+_+])>		 <========> /This is a VIRUS!/
+		|---|			/					 /________________/
+	| ------|  /
+	|_------|_/
+		|  |	|_|
+		|  |
+		|_  |_

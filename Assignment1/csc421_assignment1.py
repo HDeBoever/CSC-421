@@ -9,7 +9,7 @@ import sys
 from collections import OrderedDict
 
 class Tree():
-	# Model a parent and child relationship  between EnvStates
+	# Model a parent and child relationship between EnvStates
 	def __init__(self):
 		print("This tree will contain EnvState objects")
 
@@ -17,7 +17,8 @@ class Tree():
 # Maybe not the best solution since the branching factor is looking a bit more complicated than it has to be perhaps
 
 # A state can be modified by an action, and must return another state
-# The goal state is when we have 1 liter left over in a jug
+# The goal state is when we have 1 gallon left over in a jug
+# An EnvState object takes 3 jugs whenever it is initialized
 class EnvState():
 
 	# Class initializer
@@ -38,7 +39,7 @@ class EnvState():
 
 	def print_state(self):
 		for index, jug in enumerate(self.water_jugs):
-			print("Name: %s\t\tCapacity: %dgallons\t\tContents: %d gallons" % (jug.name, jug.max_capacity, jug.num_gallons))
+			print("Name: %s\t\tCapacity: %d gallons\t\tContents: %d gallons" % (jug.name, jug.max_capacity, jug.num_gallons))
 
 	# Check to see if the current state is equivalent to the goal state (1 gallon remaining in any one of the 3 jugs)
 	def goal_check(self):
@@ -53,6 +54,7 @@ class EnvState():
 		if not self.goal_check():
 			print("Generating all states from current state...")
 			# Return a list of sucessor states
+
 
 # A water jug object is held within a state attribute list called water_jugs
 class WaterJug():
@@ -70,7 +72,8 @@ class WaterJug():
 	def get_num_gallons(self):
 		print('\n%s has %s gallons in it.' % (self.name, self.num_gallons))
 
-	def pour_jug_on_groud(self):
+	# Empties the contents of the current jug wihout modifying any of the others.
+	def pour_on_ground(self):
 		if self.num_gallons > 0:
 			self.num_gallons = 0
 		elif self.num_gallons == 0:
@@ -83,12 +86,13 @@ class WaterJug():
 		else:
 			print("%s is already full" % self.name)
 
-	def transfer_all_water_to_other_jug(self, other_jug):
+	def transfer_all_water(self, other_jug):
 		# Check if other jug is a jug object before proceeding
 		if isinstance(other_jug, WaterJug):
 			print("\nTransfering %s gallons from %s to %s" % (str(self.num_gallons), self.name, other_jug.name))
-			# Transfer
+			# Transfer the water
 			other_jug.num_gallons += self.num_gallons
+			self.num_gallons -= self.num_gallons
 			# Catch the case of water overflow when pouring an amount larger than the max_capacity of other_jug into the other jug
 			if other_jug.num_gallons > other_jug.max_capacity:
 				other_jug.num_gallons = other_jug.max_capacity
@@ -124,7 +128,7 @@ def main(argv):
 	# test_jug2.get_num_gallons()
 	# test_jug3.get_num_gallons()
 	#
-	# test_jug1.transfer_all_water_to_other_jug(test_jug2)
+	# test_jug1.transfer_all_water(test_jug2)
 
 if __name__ == "__main__":
 	main(sys.argv)

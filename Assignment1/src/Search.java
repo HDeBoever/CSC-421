@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Search {
+
 	Problem problem;
 
-	public Search(Problem problem) { this.problem = problem; }
+	public Search(Problem problem){
+		this.problem = problem;
+	}
 
 	//Tree-search methods
 	public String BreadthFirstTreeSearch() {
@@ -64,7 +67,9 @@ public class Search {
 
 		//TODO
 		System.out.println("In the iterative deepening graph search:\n");
-
+		// while(true){
+		// 		GraphSearchDepthLimited();
+		// }
 		return GraphSearch(new FrontierLIFO());
 	}
 
@@ -75,28 +80,28 @@ public class Search {
 	//
 
 	private String TreeSearch(Frontier frontier) {
-        System.out.println("TreeSearch called");
+		System.out.println("TreeSearch called");
 		cnt = 0;
-        System.out.println("Node list set to a new ArrayList<Node>()");
+		System.out.println("Node list set to a new ArrayList<Node>()");
 		node_list = new ArrayList<Node>();
-	
 
-        System.out.println("Created initialNode from problem.initialState");
-		initialNode = MakeNode(problem.initialState); 
-        System.out.println("Adding initialNode to node_list. InitialNode: %s", initialNode.state.toString());
+
+		System.out.println("Created initialNode from problem.initialState");
+		initialNode = MakeNode(problem.initialState);
+		System.out.println("Adding initialNode to node_list. InitialNode: " + initialNode.state.toString());
 		node_list.add( initialNode );
-		
 
-        System.out.println("Inserting initial node into frontier");
+
+		System.out.println("Inserting initial node into frontier");
 		frontier.insert( initialNode );
 		while(true) {
-            System.out.println("TreeSeach iteration");
+				System.out.println("TreeSeach iteration");
 
 			if(frontier.isEmpty()) {
-                System.out.println("Frontier was empty");
+				System.out.println("Frontier was empty");
 				return null;
-            }
-			
+			}
+
 			Node node = frontier.remove();
 
 			if( problem.goal_test(node.state) )
@@ -108,15 +113,20 @@ public class Search {
 	}
 
 	private String GraphSearch(Frontier frontier) {
+
+		System.out.println("GraphSearch is called");
 		cnt = 0;
 		node_list = new ArrayList<Node>();
-
 		initialNode = MakeNode(problem.initialState);
-		node_list.add( initialNode );
-
+		node_list.add(initialNode);
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		frontier.insert( initialNode );
 		while(true) {
+
+			System.out.println("\nPrinting the node list:");
+			for (Node node : node_list){
+					System.out.print(node.state + " " + node.path_cost + " " + node.depth + " ");
+			}
 
 			if(frontier.isEmpty())
 				return null;
@@ -133,8 +143,8 @@ public class Search {
 			}
 		}
 	}
-	
-	private String TreeSearchDepthLimited(Frontier frontier, int limit) {i
+
+	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO ALEX
 
 		return null;
@@ -175,20 +185,20 @@ public class Search {
 		return successors;
 	}
 
-	//Create a string to print solution.
-	private String Solution(Node node) {
+		//Create a string to print solution.
+		private String Solution(Node node) {
 
-		String solution_str = "(cost=" + node.path_cost + ", expansions=" + cnt + ")\t";
+			String solution_str = "(cost=" + node.path_cost + ", expansions=" + cnt + ")\t";
 
-		Deque<Object> solution = new ArrayDeque<Object>();
-		do {
-			solution.push(node.state);
-			node = node.parent_node;
-		} while(node != null);
+			Deque<Object> solution = new ArrayDeque<Object>();
+			do {
+				solution.push(node.state);
+				node = node.parent_node;
+			} while(node != null);
 
-		while(!solution.isEmpty())
-			solution_str += solution.pop() + " ";
+			while(!solution.isEmpty())
+				solution_str += solution.pop() + " ";
 
-		return solution_str;
-	}
+			return solution_str;
+		}
 }

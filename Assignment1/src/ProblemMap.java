@@ -112,7 +112,11 @@ public class ProblemMap extends Problem {
 		Search search  = new Search(problem);
 		Search search1  = new Search(problem1);
 
+		//Henri
 		System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningGraphSearch());
+
+		// Alex
+		System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningTreeSearch());
 
 		// System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
 		// System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());

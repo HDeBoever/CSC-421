@@ -59,7 +59,18 @@ public class Search {
 	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
 		//TODO ALEX
-		return null;
+    	String result = null;
+    	while(true) {
+			if( result != null ) {
+				System.out.println("Got a result");
+				break;
+			}
+			System.out.println("In the iterative deepening tree search:\n");
+			System.out.prinotln("RESULT: " + result);
+			if( result.equals("Bucharest") ) {
+				System.out.println("Done");
+			}
+		}
 	}
 
 	/*Henri is working on the method below*/
@@ -141,7 +152,7 @@ public class Search {
 
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO ALEX
-
+		
 		return null;
 	}
 

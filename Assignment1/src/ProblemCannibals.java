@@ -66,9 +66,9 @@ public class ProblemCannibals extends Problem{
 
 		private boolean isValid(StateCannibals state){
 				//Checking to see if any element of the array is negative
-				for (int i=0; i<6; i++)
+				for (int i = 0; i < 6; i++){
 						if (state.canArray[i] < 0) return false;
-
+				}
 				//Checking to see if the numbers of cannibals, missionaries, and boat
 				//are more then 3,3,1 respectively
 				//TODO
@@ -83,16 +83,15 @@ public class ProblemCannibals extends Problem{
 
 	public double h(Object state) { return 0; }
 
-
 	public static void main(String[] args) throws Exception{
-		ProblemCannibals problem = new ProblemCannibals();
-		int[] canArray = {3,3,1,0,0,0};
-		problem.initialState = new StateCannibals(canArray);
+			ProblemCannibals problem = new ProblemCannibals();
+			int[] canArray = {3,3,1,0,0,0};
+			problem.initialState = new StateCannibals(canArray);
 
-		Search search  = new Search(problem);
+			Search search  = new Search(problem);
 
-		System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+			System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
 
-		System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
+			System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
 	}
 }

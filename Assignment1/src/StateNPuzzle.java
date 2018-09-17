@@ -1,5 +1,5 @@
-public class StateNPuzzle
-{
+public class StateNPuzzle{
+
 	int N;
 		int[][] puzzleArray;
 		int i0, j0; //position of zero

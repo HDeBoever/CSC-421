@@ -65,27 +65,33 @@ public class Search {
 	/*Henri is working on the method below*/
 	public String IterativeDeepeningGraphSearch() {
 
-		//TODO
 		System.out.println("In the iterative deepening graph search:\n");
+		ArrayList<String> memory = new ArrayList<String>();
 		while(true){
-				String result = GraphSearchDepthLimited(new FrontierLIFO(), 8);
-				System.out.println("RESULT: " + result);
-				// Check if result is a solution
-				if(result.equals("Bucharest")){
-						System.out.println("Done");
-				}
+			String result = GraphSearchDepthLimited(new FrontierLIFO(), 8);
+			System.out.println("RESULT: " + result);
+			// Store the result into a list
+			if(!memory.contains(result)){
+				System.out.println(result);
+				memory.add(result);
+			}else{
+				System.out.println("Done!");
+				System.exit(0);
+			}
+			// if(result.equals("Bucharest")){
+			// 		System.out.println("Done");
+			// }
 		}
 	}
 
 	//For statistics purposes
-	int cnt; //count expansions
+	int count; //count expansions
 	List<Node> node_list; //store all nodes ever generated
 	Node initialNode; //initial node based on initial state
-	//
 
 	private String TreeSearch(Frontier frontier) {
 		System.out.println("TreeSearch called");
-		cnt = 0;
+		count = 0;
 		System.out.println("Node list set to a new ArrayList<Node>()");
 		node_list = new ArrayList<Node>();
 
@@ -111,13 +117,13 @@ public class Search {
 				return Solution(node);
 
 			frontier.insertAll(Expand(node,problem));
-			cnt++;
+			count++;
 		}
 	}
 
 	private String GraphSearch(Frontier frontier) {
 
-		cnt = 0;
+		count = 0;
 		node_list = new ArrayList<Node>();
 		initialNode = MakeNode(problem.initialState);
 		node_list.add(initialNode);
@@ -134,7 +140,7 @@ public class Search {
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
 				frontier.insertAll(Expand(node, problem));
-				cnt++;
+				count++;
 			}
 		}
 	}
@@ -150,7 +156,7 @@ public class Search {
 		System.out.println("GraphSearchDepthLimited is called...");
 
 		// Initialize the expansion count to 0 before starting
-		cnt = 0;
+		count = 0;
 		// Initialize the frontier using the initial state of the problem
 		initialNode = MakeNode(problem.initialState);
 		node_list = new ArrayList<Node>();
@@ -158,9 +164,9 @@ public class Search {
 		// Initialize an empty set to contain explored nodes
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		// Insert the start point into the frontier
-		frontier.insert( initialNode );
+		frontier.insert(initialNode);
 
-		while(true) {
+		while(true){
 
 			// At each loop print the contents of the visited nodes list
 			// System.out.println("\nPrinting the node list:");
@@ -174,7 +180,7 @@ public class Search {
 
 			// If the frontier is empty, return failure
 			if(frontier.isEmpty())
-					return null;
+				return null;
 			else{
 
 				// remove a node from the frontier
@@ -182,13 +188,15 @@ public class Search {
 				System.out.println("NODE STATE: " + node.state);
 
 				// If the state of the current node is the problem's goal state, return the solution
-				if( problem.goal_test(node.state) )
-						return Solution(node);
-				else if(!explored.contains(node.state) && cnt < limit) {
-						explored.add(node.state);
-						frontier.insertAll(Expand(node, problem));
-						// Increment the number of expansions
-						cnt++;
+				if( problem.goal_test(node.state) ){
+					return Solution(node);
+				}
+				// If the state of the node is not explored and if the depth is less than the limit
+				if(!explored.contains(node.state) && count < limit) {
+					explored.add(node.state);
+					frontier.insertAll(Expand(node, problem));
+					// Increment the number of expansions
+					count++;
 				}
 			}
 		}
@@ -204,7 +212,7 @@ public class Search {
 	}
 
 	private Set<Node> Expand(Node node, Problem problem) {
-		node.order = cnt;
+		node.order = count;
 
 		Set<Node> successors = new HashSet<Node>(); //empty set
 		Set<Object> successor_states = problem.getSuccessors(node.state);
@@ -217,7 +225,7 @@ public class Search {
 			s.depth = node.depth + 1;
 			successors.add(s);
 
-			node_list.add( s );
+			node_list.add(s);
 		}
 
 		return successors;
@@ -226,7 +234,7 @@ public class Search {
 		//Create a string to print solution.
 		private String Solution(Node node) {
 
-			String solution_str = "(cost=" + node.path_cost + ", expansions=" + cnt + ")\t";
+			String solution_str = "(cost = " + node.path_cost + ", expansions = " + count + ")\t";
 
 			Deque<Object> solution = new ArrayDeque<Object>();
 			do {

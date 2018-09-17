@@ -5,12 +5,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/*ProblemMap.java
+* Implements abstract class Problem
+*/
 public class ProblemMap extends Problem {
 	Map<String, Map<String, Double>> map;
 	Map<String, Double> sld;
 	
 	public Object goalState;
 	
+    /*Takes a text file input
+    * Creates a hashmap with Key = fromCity, Value=<toCity, Cost>
+    * Edges are bi-directional (each fromCity is also a toCity)
+    */
 	public ProblemMap(String mapfilename) throws Exception {
 		map = new HashMap<String, Map<String, Double>>();
 		//read map from file of source-destination-cost triples (tab separated)
@@ -35,6 +42,7 @@ public class ProblemMap extends Problem {
         reader.close();
 	}
 	
+    /*Not sure what this does yet*/
 	public ProblemMap(String mapfilename, String heuristicfilename) throws Exception {
 		this(mapfilename);
 		
@@ -52,10 +60,19 @@ public class ProblemMap extends Problem {
         reader.close();
 	}
 	
+    /*Checks if the current state is a goal state*/
 	boolean goal_test(Object state) {
 		return state.equals(goalState);
 	}
 
+    /*Returns a Set (iterable non-duplicate list) of state objects
+    * which are successor states to the current STATE (the city)
+    * A successor state might be any connected city. This is determined
+    * by calling map.get(state) which will obtain all those VALUE pairs
+    * (to/from cities and cost) connected to the current state city
+    * and then map.get(state).keySet() returns a Set view of all of
+    * those connected cities.
+    */
 	Set<Object> getSuccessors(Object state) {
 		Set<Object> result = new HashSet<Object>();
 		for(Object successor_state : map.get(state).keySet())
@@ -63,16 +80,27 @@ public class ProblemMap extends Problem {
 		return result;
 	}
 	
+    /*Gets the cost between two cities
+    * Gets the keyvalue pair of the keyvalue pair
+    * which is the cost
+    */
 	double step_cost(Object fromState, Object toState) {
 		return map.get(fromState).get(toState);
 	}
 
+    /*Gets the heuristic version of the map, sld.
+    * not sure what its used for yet
+    */
 	public double h(Object state) {
 		return sld.get(state);
 	}
 
+    /*Creates a new ProblemMap object
+    * sets the initial state, then the goal state
+    * creates a Search() object with parameter 
+    */
 	public static void main(String[] args) throws Exception {
-		ProblemMap problem = new ProblemMap("romania.txt","romaniaSLD.txt");
+		ProblemMap problem = new ProblemMap("../romania.txt","../romaniaSLD.txt");
 		problem.initialState = "Timisoara";
 		problem.goalState = "Bucharest";
 		

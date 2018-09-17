@@ -55,7 +55,7 @@ public class Search {
 	
 	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
-		//TODO
+		//TODO ALEX
 		return null;
 	}
 	
@@ -71,17 +71,27 @@ public class Search {
 	//
 	
 	private String TreeSearch(Frontier frontier) {
-		cnt = 0; 
+        System.out.println("TreeSearch called");
+		cnt = 0;
+        System.out.println("Node list set to a new ArrayList<Node>()");
 		node_list = new ArrayList<Node>();
-		
+	
+
+        System.out.println("Created initialNode from problem.initialState");
 		initialNode = MakeNode(problem.initialState); 
+        System.out.println("Adding initialNode to node_list. InitialNode: %s", initialNode.state.toString());
 		node_list.add( initialNode );
 		
+
+        System.out.println("Inserting initial node into frontier");
 		frontier.insert( initialNode );
 		while(true) {
-			
-			if(frontier.isEmpty())
+            System.out.println("TreeSeach iteration");
+
+			if(frontier.isEmpty()) {
+                System.out.println("Frontier was empty");
 				return null;
+            }
 			
 			Node node = frontier.remove();
 			
@@ -120,8 +130,8 @@ public class Search {
 		}
 	}
 	
-	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
-		//TODO
+	private String TreeSearchDepthLimited(Frontier frontier, int limit) {i
+		//TODO ALEX
 		return null;
 	}
 

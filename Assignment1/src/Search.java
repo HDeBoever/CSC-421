@@ -10,7 +10,7 @@ public class Search {
 	Problem problem;
 
 	public Search(Problem problem){
-			this.problem = problem;
+		this.problem = problem;
 	}
 
 	//Tree-search methods
@@ -60,22 +60,22 @@ public class Search {
 	public String IterativeDeepeningTreeSearch() {
 		//TODO ALEX
 
-    	String result = null;
-    	while(true) {
+		String result = null;
+		while(true) {
 			result = TreeSearchDepthLimited(new FrontierLIFO(), 8);
 
 			if( result != null ) {
-				System.out.println("Got a result");
+				//System.out.println("Got a result");
 				break;
 			}
-			System.out.println("In the iterative deepening tree search:");
+			//System.out.println("In the iterative deepening tree search:");
 			if( result != null && result.equals("Bucharest") ) {
-				System.out.println("RESULT: " + result.toString());
-				System.out.println("Done");
+				//System.out.println("RESULT: " + result.toString());
+				//System.out.println("Done");
 				return result;
 			}
 			else {
-				System.out.println("TreeSearchDepthLimited returned null, returning null back to Main\n");
+				//System.out.println("TreeSearchDepthLimited returned null, returning null back to Main\n");
 				//return null;
 			}
 		}
@@ -90,11 +90,11 @@ public class Search {
 		ArrayList<String> previouslySeenSolutions = new ArrayList<String>();
 		int iterator = 0;
 		while(true){
-			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 50);
+			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 15);
 			// Store the result into a list
 			if(solution_node != null){
 				if(!previouslySeenSolutions.contains(Solution(solution_node))){
-					System.out.println("RESULT: " + solution_node.path_cost + " " + solution_node.state);
+					// System.out.println("RESULT: " + solution_node.path_cost + " " + solution_node.state);
 					previouslySeenSolutions.add(Solution(solution_node));
 				}else if(solution_node.path_cost == 536.0){
 					break;
@@ -162,7 +162,7 @@ public class Search {
 	}
 
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
-		System.out.println("TreeSearchDepthLimited called");
+		//System.out.println("TreeSearchDepthLimited called");
 		//TODO ALEX
 		//Initialize frontier to initial state of problem
 		count = 0;
@@ -173,28 +173,28 @@ public class Search {
 
 		//Loop do
 		while(true) {
-			System.out.println("Iterating in TreeSearchDepthLimited. Count: " + count);
+			//System.out.println("Iterating in TreeSearchDepthLimited. Count: " + count);
 			//If frontier is empty return failure
 			if(frontier.isEmpty()) {
-				System.out.println("Frontier empty, TreeSearchDepthLimited() returning null");
+				//System.out.println("Frontier empty, TreeSearchDepthLimited() returning null");
 				return null;
 			}
 
 			//Remove n from the frontier (pops from lifo)
 			Node node = frontier.remove();
-			System.out.println("Popping next node from frontier, node.path_cost: " + node.path_cost + " node.state: " + node.state);
+			//System.out.println("Popping next node from frontier, node.path_cost: " + node.path_cost + " node.state: " + node.state);
 
 			//If n contains the goal state then return the corresponding solution
 			if(problem.goal_test(node.state) ) {
-				System.out.println("Found a solution");
+				//System.out.println("Found a solution");
 				return Solution(node);
 			}
-			System.out.println("Expanding the frontier (ie adding to stack)");
+			//System.out.println("Expanding the frontier (ie adding to stack)");
 			frontier.insertAll(Expand(node,problem));
 			count++;
 
 			if( count >= limit ) {
-				System.out.println("Count was: " + count + "Reached limit: " + limit);
+			//	System.out.println("Count was: " + count + "Reached limit: " + limit);
 				return null;
 			}
 		}
@@ -257,8 +257,8 @@ public class Search {
 	}
 
 	private Set<Node> Expand(Node node, Problem problem) {
-		node.order = count;
 
+		node.order = count;
 		Set<Node> successors = new HashSet<Node>(); //empty set
 		Set<Object> successor_states = problem.getSuccessors(node.state);
 
@@ -269,18 +269,15 @@ public class Search {
 			s.path_cost = node.path_cost + problem.step_cost(node.state, result);
 			s.depth = node.depth + 1;
 			successors.add(s);
-
 			node_list.add(s);
 		}
-
 		return successors;
 	}
 
 	//Create a string to print the solution.
 	private String Solution(Node node) {
 
-		String solution_str = "(cost = " + node.path_cost + ", expansions = " + count + ")\t";
-
+		String solution_str = "(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";
 		Deque<Object> solution = new ArrayDeque<Object>();
 		do {
 			solution.push(node.state);

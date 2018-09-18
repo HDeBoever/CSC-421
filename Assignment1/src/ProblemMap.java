@@ -114,8 +114,9 @@ public class ProblemMap extends Problem {
 		//Henri
 		System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningGraphSearch());
 
-		// Alex
-		//System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningTreeSearch());
+		// Alex		String result = search.IterativeDeepeningTreeSearch();
+		if( result != null ) System.out.println("GraphSearchDepthLimited:\t\t" + result );
+		else System.out.println("GraphSearchDepthLimited: RETURNED NULL!" );
 
 		// System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
 		// System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());

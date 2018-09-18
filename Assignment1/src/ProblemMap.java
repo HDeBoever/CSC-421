@@ -42,7 +42,6 @@ public class ProblemMap extends Problem {
 				reader.close();
 	}
 
-		/*Not sure what this does yet*/
 	public ProblemMap(String mapfilename, String heuristicfilename) throws Exception {
 		this(mapfilename);
 
@@ -116,7 +115,7 @@ public class ProblemMap extends Problem {
 		System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningGraphSearch());
 
 		// Alex
-		System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningTreeSearch());
+		//System.out.println("GraphSearchDepthLimited:\t\t" + search.IterativeDeepeningTreeSearch());
 
 		// System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
 		// System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());

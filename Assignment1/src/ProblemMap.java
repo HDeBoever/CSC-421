@@ -109,7 +109,7 @@ public class ProblemMap extends Problem {
 		problem1.goalState = "Bucharest";
 
 		Search search  = new Search(problem);
-		Search search1  = new Search(problem1);
+		// Search search1  = new Search(problem1);
 
 		//Henri
 		System.out.println("\n\nGraph Search Depth Limited:----------------------------------------\n");
@@ -125,10 +125,25 @@ public class ProblemMap extends Problem {
 		System.out.println("\n\nBreadth First Graph Search:----------------------------------------\n");
 		System.out.println( search.BreadthFirstGraphSearch() + "\n");
 
-		System.out.println("\n\nA-Star Graph Search:----------------------------------------\n");
-		System.out.println(search.AstarGraphSearch());
+		System.out.println("\n\nDepth First Tree Search:----------------------------------------\n");
+		System.out.println(search.DepthFirstTreeSearch() + "\n");
+		System.out.println("\n\nDepth First Graph Search:----------------------------------------\n");
+		System.out.println( search.DepthFirstGraphSearch() + "\n");
+
+		System.out.println("\n\nUniform Cost Tree Search:----------------------------------------\n");
+		System.out.println( search.UniformCostTreeSearch() + "\n");
+		System.out.println("\n\nUniform Cost Graph Search:----------------------------------------\n");
+		System.out.println( search.UniformCostGraphSearch() + "\n");
+
+		System.out.println("\n\nGreedy Best Tree Search:----------------------------------------\n");
+		System.out.println(search.GreedyBestFirstTreeSearch());
+		System.out.println("\n\nGreedy Best Graph Search:----------------------------------------\n");
+		System.out.println(search.GreedyBestFirstGraphSearch());
+		
 		System.out.println("\n\nA-Star Tree Search:----------------------------------------\n");
 		System.out.println(search.BreadthFirstGraphSearch());
+		System.out.println("\n\nA-Star Graph Search:----------------------------------------\n");
+		System.out.println(search.AstarGraphSearch());
 		//
 		// System.out.println("BreadthFirstTreeSearch:\t\t" + search1.BreadthFirstTreeSearch());
 		// System.out.println("BreadthFirstGraphSearch:\t" + search1.BreadthFirstGraphSearch());

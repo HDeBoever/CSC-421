@@ -62,7 +62,7 @@ public class Search {
 	}
 
 
-	//Iterative deepening, tree-search and graph-search
+	//Iterative deepening tree-search
 	public String IterativeDeepeningTreeSearch() {
 		//TODO ALEX
 
@@ -98,16 +98,15 @@ public class Search {
 		int iterator = 0;
 		int minIndex = 0;
 		while(true){
-			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 10);
+			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 6);
 			// Store the result into a list
 			if(solution_node != null){
-				// Insert all solution paths that lead to the goal state.
+				// Insert all solution paths that lead to the goal state and keep track of previously seen solutions.
 				if(!previouslySeenSolutions.contains(Solution(solution_node))){
-					// System.out.println("RESULT: " + solution_node.path_cost + " " + solution_node.state);
 					previouslySeenSolutions.add(Solution(solution_node));
 					previouslySeenSolutionCosts.add(solution_node.path_cost);
 					minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
-				// Stop searching for solutions once the optimal one is found
+				// Stop searching for solutions once the cost optimal one is found
 				}else if(solution_node.path_cost == 536.0){
 					System.out.println("Solution found at " + iterator + " expansions.");
 					break;
@@ -156,9 +155,10 @@ public class Search {
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		frontier.insert( initialNode );
 		while(true) {
-			if(frontier.isEmpty())
-				return null;
 
+			if(frontier.isEmpty()){
+				return null;
+			}
 
 			Node node = frontier.remove();
 			if(!explored.contains(node.state) ) {
@@ -240,12 +240,6 @@ public class Search {
 
 		while(true){
 
-			// Print testing lines: At each loop print the contents of the visited nodes list
-			// System.out.println("\nPrinting the node list:");
-			//for (Node node : node_list){
-			//		System.out.print(node.state + " " + node.path_cost + " " + node.depth + " ");
-			//}
-
 			// If the frontier is empty, return failure
 			if(frontier.isEmpty())
 				return null;
@@ -253,18 +247,26 @@ public class Search {
 
 				// remove a node from the frontier
 				Node node = frontier.remove();
-				//System.out.println("NODE STATE: " + node.state);
+
+				// If the state of the node is not explored and if the depth is less than the limit
+				if(!explored.contains(node.state) && count <= limit) {
+					explored.add(node.state);
+					frontier.insertAll(Expand(node, problem));
+				}
+
+				// Print testing lines: At each loop print the contents of the visited nodes list
+				// System.out.println("\nPrinting the node list:");
+				// for (Object obj : explored){
+				// 	System.out.print(obj + " ");
+				// }
+				// System.out.println();
 
 				// If the state of the current node is the problem's goal state, return the solution
 				if( problem.goal_test(node.state) ){
 					//System.out.println(Solution(node));
 					return node;
 				}
-				// If the state of the node is not explored and if the depth is less than the limit
-				if(!explored.contains(node.state) && count <= limit) {
-					explored.add(node.state);
-					frontier.insertAll(Expand(node, problem));
-				}
+
 				// Increment the number of expansions
 				count++;
 			}
@@ -298,7 +300,7 @@ public class Search {
 		return successors;
 	}
 
-	//Create a string to print the solution.
+	// This function creates a string to print the solution.
 	private String Solution(Node node) {
 
 		String solution_str = "\nOptimal Route:\n(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";

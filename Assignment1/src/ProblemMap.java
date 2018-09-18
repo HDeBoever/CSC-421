@@ -139,7 +139,9 @@ public class ProblemMap extends Problem {
 		System.out.println(search.GreedyBestFirstTreeSearch());
 		System.out.println("\n\nGreedy Best Graph Search:----------------------------------------\n");
 		System.out.println(search.GreedyBestFirstGraphSearch());
-		
+
+		// A* implementations only work when the straight-line-distance file for Romania is read into the constructor
+		// for the ProblemMap Object instance.
 		System.out.println("\n\nA-Star Tree Search:----------------------------------------\n");
 		System.out.println(search.BreadthFirstGraphSearch());
 		System.out.println("\n\nA-Star Graph Search:----------------------------------------\n");

@@ -229,7 +229,7 @@ public class Search {
 
 				// remove a node from the frontier
 				Node node = frontier.remove();
-				System.out.println("NODE STATE: " + node.state);
+				//System.out.println("NODE STATE: " + node.state);
 
 				// If the state of the current node is the problem's goal state, return the solution
 				if( problem.goal_test(node.state) ){
@@ -276,7 +276,7 @@ public class Search {
 		return successors;
 	}
 
-	//Create a string to print solution.
+	//Create a string to print the solution.
 	private String Solution(Node node) {
 
 		String solution_str = "(cost = " + node.path_cost + ", expansions = " + count + ")\t";
@@ -288,8 +288,11 @@ public class Search {
 		} while(node != null);
 
 		while(!solution.isEmpty())
-			solution_str += solution.pop() + " ";
-
+			if(solution.size() == 1){
+				solution_str += solution.pop();
+			}else{
+				solution_str += solution.pop() + " ---> ";
+			}
 		return solution_str;
 	}
 }

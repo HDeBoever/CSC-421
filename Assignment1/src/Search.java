@@ -61,16 +61,23 @@ public class Search {
 		//TODO ALEX
     	String result = null;
     	while(true) {
+			result = TreeSearchDepthLimited(new FrontierLIFO(), 8);
 			if( result != null ) {
 				System.out.println("Got a result");
 				break;
 			}
-			System.out.println("In the iterative deepening tree search:\n");
-			System.out.prinotln("RESULT: " + result);
-			if( result.equals("Bucharest") ) {
+			System.out.println("In the iterative deepening tree search:");
+			if( result != null && result.equals("Bucharest") ) {
+				System.out.println("RESULT: " + result.toString());
 				System.out.println("Done");
+				return result;
+			}
+			else {
+				System.out.println("TreeSearchDepthLimited returned null, returning null back to Main\n");
+				//return null;
 			}
 		}
+		return "";
 	}
 
 	/*Henri is working on the method below*/
@@ -101,24 +108,15 @@ public class Search {
 	Node initialNode; //initial node based on initial state
 
 	private String TreeSearch(Frontier frontier) {
-		System.out.println("TreeSearch called");
 		count = 0;
-		System.out.println("Node list set to a new ArrayList<Node>()");
 		node_list = new ArrayList<Node>();
 
-		System.out.println("Created initialNode from problem.initialState");
 		initialNode = MakeNode(problem.initialState);
-		System.out.println("Adding initialNode to node_list. InitialNode: " + initialNode.state.toString());
 		node_list.add( initialNode );
 
-
-		System.out.println("Inserting initial node into frontier");
 		frontier.insert( initialNode );
 		while(true) {
-				System.out.println("TreeSeach iteration");
-
 			if(frontier.isEmpty()) {
-				System.out.println("Frontier was empty");
 				return null;
 			}
 
@@ -157,9 +155,42 @@ public class Search {
 	}
 
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
+		System.out.println("TreeSearchDepthLimited called");
 		//TODO ALEX
-		
-		return null;
+		//Initialize frontier to initial state of problem
+		count = 0;
+		node_list = new ArrayList<Node>();
+		initialNode = MakeNode(problem.initialState);
+		node_list.add( initialNode );
+		frontier.insert( initialNode );
+
+		//Loop do
+		while(true) {
+			System.out.println("Iterating in TreeSearchDepthLimited. Count: " + count);
+			//If frontier is empty return failure
+			if(frontier.isEmpty()) {
+				System.out.println("Frontier empty, TreeSearchDepthLimited() returning null");
+				return null;
+			}
+
+			//Remove n from the frontier (pops from lifo)
+			Node node = frontier.remove();
+			System.out.println("Popping next node from frontier, node.path_cost: " + node.path_cost + " node.state: " + node.state);
+
+			//If n contains the goal state then return the corresponding solution
+			if(problem.goal_test(node.state) ) {
+				System.out.println("Found a solution");
+				return Solution(node);
+			}
+			System.out.println("Expanding the frontier (ie adding to stack)");
+			frontier.insertAll(Expand(node,problem));
+			count++;
+
+			if( count >= limit ) {
+				System.out.println("Count was: " + count + "Reached limit: " + limit);
+				return null;
+			}
+		}
 	}
 
 	/*Henri is working on the method below*/

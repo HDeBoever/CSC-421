@@ -59,40 +59,46 @@ public class Search {
 	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
 		//TODO ALEX
-    	String result = null;
-    	while(true) {
+		String result = null;
+		while(true) {
 			if( result != null ) {
 				System.out.println("Got a result");
 				break;
 			}
 			System.out.println("In the iterative deepening tree search:\n");
-			System.out.prinotln("RESULT: " + result);
-			if( result.equals("Bucharest") ) {
+			System.out.println("RESULT: " + result);
+			if(result.equals("Bucharest") ) {
 				System.out.println("Done");
 			}
 		}
+		return null;
 	}
 
-	/*Henri is working on the method below*/
+	/*
+	* An implementation of Iterative Deepening Search for a Graph - Henri De Boever 2018/09/17
+	*/
 	public String IterativeDeepeningGraphSearch() {
 
-		System.out.println("In the iterative deepening graph search:\n");
-		ArrayList<String> memory = new ArrayList<String>();
+		ArrayList<String> previouslySeenSolutions = new ArrayList<String>();
+		int iterator = 0;
 		while(true){
-			String result = GraphSearchDepthLimited(new FrontierLIFO(), 8);
-			System.out.println("RESULT: " + result);
+			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 50);
 			// Store the result into a list
-			if(!memory.contains(result)){
-				System.out.println(result);
-				memory.add(result);
-			}else{
-				System.out.println("Done!");
-				System.exit(0);
+			if(solution_node != null){
+				if(!previouslySeenSolutions.contains(Solution(solution_node))){
+					System.out.println("RESULT: " + solution_node.path_cost + " " + solution_node.state);
+					previouslySeenSolutions.add(Solution(solution_node));
+				}else if(solution_node.path_cost == 536.0){
+					break;
+				}
 			}
-			// if(result.equals("Bucharest")){
-			// 		System.out.println("Done");
-			// }
+			iterator ++;
 		}
+		// Print the set of all solutions
+		for (String solution : previouslySeenSolutions) {
+			System.out.println(solution);
+		}
+		return null;
 	}
 
 	//For statistics purposes
@@ -158,13 +164,12 @@ public class Search {
 
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO ALEX
-		
+
 		return null;
 	}
 
 	/*Henri is working on the method below*/
-	private String GraphSearchDepthLimited(Frontier frontier, int limit) {
-		System.out.println("GraphSearchDepthLimited is called...");
+	private Node GraphSearchDepthLimited(Frontier frontier, int limit) {
 
 		// Initialize the expansion count to 0 before starting
 		count = 0;
@@ -181,13 +186,9 @@ public class Search {
 
 			// At each loop print the contents of the visited nodes list
 			// System.out.println("\nPrinting the node list:");
-			// for (Node node : node_list){
-			// 		System.out.print(node.state + " " + node.path_cost + " " + node.depth + " ");
-			// }
-
-			// Print the contents of the Frontier here
-			// System.out.println("\nPrinting the Frontier:");
-			// System.out.println(frontier);
+			//for (Node node : node_list){
+			//		System.out.print(node.state + " " + node.path_cost + " " + node.depth + " ");
+			//}
 
 			// If the frontier is empty, return failure
 			if(frontier.isEmpty())
@@ -200,7 +201,8 @@ public class Search {
 
 				// If the state of the current node is the problem's goal state, return the solution
 				if( problem.goal_test(node.state) ){
-					return Solution(node);
+					//System.out.println(Solution(node));
+					return node;
 				}
 				// If the state of the node is not explored and if the depth is less than the limit
 				if(!explored.contains(node.state) && count < limit) {
@@ -242,20 +244,20 @@ public class Search {
 		return successors;
 	}
 
-		//Create a string to print solution.
-		private String Solution(Node node) {
+	//Create a string to print solution.
+	private String Solution(Node node) {
 
-			String solution_str = "(cost = " + node.path_cost + ", expansions = " + count + ")\t";
+		String solution_str = "(cost = " + node.path_cost + ", expansions = " + count + ")\t";
 
-			Deque<Object> solution = new ArrayDeque<Object>();
-			do {
-				solution.push(node.state);
-				node = node.parent_node;
-			} while(node != null);
+		Deque<Object> solution = new ArrayDeque<Object>();
+		do {
+			solution.push(node.state);
+			node = node.parent_node;
+		} while(node != null);
 
-			while(!solution.isEmpty())
-				solution_str += solution.pop() + " ";
+		while(!solution.isEmpty())
+			solution_str += solution.pop() + " ";
 
-			return solution_str;
-		}
+		return solution_str;
+	}
 }

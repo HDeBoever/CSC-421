@@ -113,7 +113,7 @@ public class ProblemMap extends Problem {
 
 		//Henri
 		System.out.println("\n\nGraph Search Depth Limited:\n");
-		System.out.println(search.IterativeDeepeningGraphSearch());
+		System.out.println(search.IterativeDeepeningGraphSearch() + "\n");
 
 		// Alex
 		String result = search.IterativeDeepeningTreeSearch();
@@ -121,9 +121,14 @@ public class ProblemMap extends Problem {
 		else System.out.println("IterativeDeepeningTreeSearch: RETURNED NULL!" );
 
 		System.out.println("\n\nBreadth First Tree Search:\n");
-		System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+		System.out.println(search.BreadthFirstTreeSearch() + "\n");
 		System.out.println("\n\nBreadth First Graph Search:\n");
-		System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
+		System.out.println( search.BreadthFirstGraphSearch() + "\n");
+
+		System.out.println("\n\nA-Star Graph Search:\n");
+		System.out.println(search.AstarGraphSearch());
+		System.out.println("\n\nA-Star Tree Search:\n");
+		System.out.println(search.BreadthFirstGraphSearch());
 		//
 		// System.out.println("BreadthFirstTreeSearch:\t\t" + search1.BreadthFirstTreeSearch());
 		// System.out.println("BreadthFirstGraphSearch:\t" + search1.BreadthFirstGraphSearch());

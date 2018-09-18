@@ -23,8 +23,7 @@ public class StateCannibals
 		}
 
 		public int hashCode() {
-				return canArray[0]*100000 + canArray[1]*10000 + canArray[2]*1000 +
-							 canArray[3]*100 + canArray[4]*10 + canArray[5];
+				return canArray[0]*100000 + canArray[1]*10000 + canArray[2]*1000 + canArray[3]*100 + canArray[4]*10 + canArray[5];
 		}
 
 		public String toString()

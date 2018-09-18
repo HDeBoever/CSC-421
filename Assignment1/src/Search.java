@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
@@ -88,25 +89,27 @@ public class Search {
 	public String IterativeDeepeningGraphSearch() {
 
 		ArrayList<String> previouslySeenSolutions = new ArrayList<String>();
+		ArrayList<Double> previouslySeenSolutionCosts = new ArrayList<Double>();
 		int iterator = 0;
+		int minIndex = 0;
 		while(true){
 			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 15);
 			// Store the result into a list
 			if(solution_node != null){
+				// Insert all solution paths that lead to the goal state.
 				if(!previouslySeenSolutions.contains(Solution(solution_node))){
 					// System.out.println("RESULT: " + solution_node.path_cost + " " + solution_node.state);
 					previouslySeenSolutions.add(Solution(solution_node));
+					previouslySeenSolutionCosts.add(solution_node.path_cost);
+					minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
 				}else if(solution_node.path_cost == 536.0){
 					break;
 				}
 			}
 			iterator ++;
 		}
-		// Print the set of all solutions
-		for (String solution : previouslySeenSolutions) {
-			System.out.println(solution);
-		}
-		return null;
+		// Return the cost optimal solution
+		return previouslySeenSolutions.get(minIndex);
 	}
 
 	//For statistics purposes
@@ -216,7 +219,7 @@ public class Search {
 
 		while(true){
 
-			// At each loop print the contents of the visited nodes list
+			// Print testing lines: At each loop print the contents of the visited nodes list
 			// System.out.println("\nPrinting the node list:");
 			//for (Node node : node_list){
 			//		System.out.print(node.state + " " + node.path_cost + " " + node.depth + " ");
@@ -237,7 +240,7 @@ public class Search {
 					return node;
 				}
 				// If the state of the node is not explored and if the depth is less than the limit
-				if(!explored.contains(node.state) && count < limit) {
+				if(!explored.contains(node.state) && count <= limit) {
 					explored.add(node.state);
 					frontier.insertAll(Expand(node, problem));
 					// Increment the number of expansions

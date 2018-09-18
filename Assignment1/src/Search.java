@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
@@ -31,6 +32,8 @@ public class Search {
 		return TreeSearch(new FrontierPriorityQueue(new ComparatorH(problem)));
 	}
 
+	// If the heuristics function is admissible, A* using tree search is optimal
+	// An admissible heuristic never iverestimates the cost of getting to the goal, i.e. It is optimistic
 	public String AstarTreeSearch() {
 		return TreeSearch(new FrontierPriorityQueue(new ComparatorF(problem)));
 	}
@@ -52,6 +55,8 @@ public class Search {
 		return GraphSearch(new FrontierPriorityQueue(new ComparatorH(problem)));
 	}
 
+	// A* Graph Search can return sub-optimal solutions because graph search can discard the optimal paths
+	// to a repeated state if the optimal path is not the first one generated.
 	public String AstarGraphSearch() {
 		return GraphSearch(new FrontierPriorityQueue(new ComparatorF(problem)));
 	}
@@ -93,7 +98,7 @@ public class Search {
 		int iterator = 0;
 		int minIndex = 0;
 		while(true){
-			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 15);
+			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 10);
 			// Store the result into a list
 			if(solution_node != null){
 				// Insert all solution paths that lead to the goal state.
@@ -102,11 +107,13 @@ public class Search {
 					previouslySeenSolutions.add(Solution(solution_node));
 					previouslySeenSolutionCosts.add(solution_node.path_cost);
 					minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
+				// Stop searching for solutions once the optimal one is found
 				}else if(solution_node.path_cost == 536.0){
+					System.out.println("Solution found at " + iterator + " expansions.");
 					break;
 				}
+				iterator ++;
 			}
-			iterator ++;
 		}
 		// Return the cost optimal solution
 		return previouslySeenSolutions.get(minIndex);
@@ -152,15 +159,29 @@ public class Search {
 			if(frontier.isEmpty())
 				return null;
 
+
 			Node node = frontier.remove();
-			// If the state of the current node is the problem's goal state, return the solution
-			if( problem.goal_test(node.state) )
-				return Solution(node);
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
 				frontier.insertAll(Expand(node, problem));
-				count++;
+				//count++;
 			}
+
+			// Following code is just for visualization of explored nodes at each step
+			System.out.println("\nCurrent Set of Explored Nodes:");
+			System.out.print("{ ");
+			for (Object obj : explored){
+				System.out.print(obj + " ");
+			}
+			System.out.print("}");
+			System.out.println();
+
+			// If the state of the current node is the problem's goal state, return the solution
+			if( problem.goal_test(node.state) ){
+				return Solution(node);
+			}
+
+			count++;
 		}
 	}
 
@@ -243,9 +264,9 @@ public class Search {
 				if(!explored.contains(node.state) && count <= limit) {
 					explored.add(node.state);
 					frontier.insertAll(Expand(node, problem));
-					// Increment the number of expansions
-					count++;
 				}
+				// Increment the number of expansions
+				count++;
 			}
 		}
 	}
@@ -280,7 +301,7 @@ public class Search {
 	//Create a string to print the solution.
 	private String Solution(Node node) {
 
-		String solution_str = "(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";
+		String solution_str = "\nOptimal Route:\n(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";
 		Deque<Object> solution = new ArrayDeque<Object>();
 		do {
 			solution.push(node.state);

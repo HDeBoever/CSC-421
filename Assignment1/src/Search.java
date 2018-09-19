@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Iterator;
 
 public class Search {
 
@@ -180,7 +181,6 @@ public class Search {
 			if( problem.goal_test(node.state) ){
 				return Solution(node);
 			}
-
 			count++;
 		}
 	}
@@ -256,10 +256,11 @@ public class Search {
 
 				// Print testing lines: At each loop print the contents of the visited nodes list
 				// System.out.println("\nPrinting the node list:");
-				// for (Object obj : explored){
-				// 	System.out.print(obj + " ");
-				// }
-				// System.out.println();
+				Iterator iter = frontier.iterator();
+				while(iter.hasNext()){
+					System.out.print(iter.next() + " ");
+				}
+				System.out.println();
 
 				// If the state of the current node is the problem's goal state, return the solution
 				if( problem.goal_test(node.state) ){

@@ -6,6 +6,8 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Search {
@@ -65,28 +67,27 @@ public class Search {
 
 	//Iterative deepening tree-search
 	public String IterativeDeepeningTreeSearch() {
-		//TODO ALEX
-
-		String result = null;
-		while(true) {
-			result = TreeSearchDepthLimited(new FrontierLIFO(), 8);
-
-			if( result != null ) {
-				//System.out.println("Got a result");
-				break;
-			}
-			//System.out.println("In the iterative deepening tree search:");
-			if( result != null && result.equals("Bucharest") ) {
-				//System.out.println("RESULT: " + result.toString());
-				//System.out.println("Done");
-				return result;
-			}
-			else {
-				//System.out.println("TreeSearchDepthLimited returned null, returning null back to Main\n");
-				//return null;
+		Map<String,Double> cumulativeSolutions = new HashMap<String,Double>();
+		double minCost = Double.MAX_VALUE;
+		String minSolution = "";
+		for( int limit = 0;;limit++ ) { //iterate forever until we see a repeated path
+			Node solution_node = TreeSearchDepthLimited(new FrontierLIFO(), limit);
+			if( solution_node != null ) {
+				if( cumulativeSolutions.containsKey(Solution(solution_node))) {
+					//The tree search will add unique paths until it reaches depth 48, crazy
+					//System.out.println("REPEATED PATH, BREAKING AT LIMIT: " + limit);
+					break;
+				}
+				else {
+					if (solution_node.path_cost < minCost) {
+						minCost = solution_node.path_cost;
+						minSolution = Solution(solution_node);
+					}
+					cumulativeSolutions.put(Solution(solution_node), solution_node.path_cost);
+				}
 			}
 		}
-		return "";
+		return minSolution;
 	}
 
 	/*
@@ -185,8 +186,7 @@ public class Search {
 		}
 	}
 
-	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
-		//System.out.println("TreeSearchDepthLimited called");
+	private Node TreeSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO ALEX
 		//Initialize frontier to initial state of problem
 		count = 0;
@@ -197,28 +197,23 @@ public class Search {
 
 		//Loop do
 		while(true) {
-			//System.out.println("Iterating in TreeSearchDepthLimited. Count: " + count);
 			//If frontier is empty return failure
 			if(frontier.isEmpty()) {
-				//System.out.println("Frontier empty, TreeSearchDepthLimited() returning null");
 				return null;
 			}
 
 			//Remove n from the frontier (pops from lifo)
 			Node node = frontier.remove();
-			//System.out.println("Popping next node from frontier, node.path_cost: " + node.path_cost + " node.state: " + node.state);
 
 			//If n contains the goal state then return the corresponding solution
 			if(problem.goal_test(node.state) ) {
-				//System.out.println("Found a solution");
-				return Solution(node);
+				return node;
 			}
-			//System.out.println("Expanding the frontier (ie adding to stack)");
-			frontier.insertAll(Expand(node,problem));
-			count++;
-
-			if( count >= limit ) {
-			//	System.out.println("Count was: " + count + "Reached limit: " + limit);
+			else if( count < limit ) {
+				frontier.insertAll(Expand(node,problem));
+				count++;
+			}
+			else {
 				return null;
 			}
 		}
@@ -256,11 +251,11 @@ public class Search {
 
 				// Print testing lines: At each loop print the contents of the visited nodes list
 				// System.out.println("\nPrinting the node list:");
-				Iterator iter = frontier.iterator();
-				while(iter.hasNext()){
-					System.out.print(iter.next() + " ");
-				}
-				System.out.println();
+				// Iterator iter = frontier.iterator();
+				// while(iter.hasNext()){
+				// 	System.out.print(iter.next() + " ");
+				// }
+				// System.out.println();
 
 				// If the state of the current node is the problem's goal state, return the solution
 				if( problem.goal_test(node.state) ){

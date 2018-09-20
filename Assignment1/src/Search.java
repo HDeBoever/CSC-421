@@ -70,10 +70,10 @@ public class Search {
 		Map<String,Double> cumulativeSolutions = new HashMap<String,Double>();
 		double minCost = Double.MAX_VALUE;
 		String minSolution = "";
-		for( int limit = 0;;limit++ ) { //iterate forever until we see a repeated path
+		for( int limit = 0; ; limit++) { //iterate forever until we see a repeated path
 			Node solution_node = TreeSearchDepthLimited(new FrontierLIFO(), limit);
 			if( solution_node != null ) {
-				if( cumulativeSolutions.containsKey(Solution(solution_node))) {
+				if(cumulativeSolutions.containsKey(Solution(solution_node))) {
 					//The tree search will add unique paths until it reaches depth 48, crazy
 					//System.out.println("REPEATED PATH, BREAKING AT LIMIT: " + limit);
 					break;
@@ -95,30 +95,50 @@ public class Search {
 	*/
 	public String IterativeDeepeningGraphSearch() {
 
-		ArrayList<String> previouslySeenSolutions = new ArrayList<String>();
-		ArrayList<Double> previouslySeenSolutionCosts = new ArrayList<Double>();
-		int iterator = 0;
-		int minIndex = 0;
+		Map<String,Double> cumulativeSolutions = new HashMap<String,Double>();
+		double minCost = Double.MAX_VALUE;
+		String optimalSolution = "";
+		//ArrayList<String> previouslySeenSolutions = new ArrayList<String>();
+		//ArrayList<Double> previouslySeenSolutionCosts = new ArrayList<Double>();
+		//int iterator = 0;
+		//int minIndex = 0;
+		int iteration = 0;
 		while(true){
-			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), 6);
-			// Store the result into a list
+			Node solution_node = GraphSearchDepthLimited(new FrontierLIFO(), iteration);
+			// Store the result into a HashMap
 			if(solution_node != null){
-				// Insert all solution paths that lead to the goal state and keep track of previously seen solutions.
-				if(!previouslySeenSolutions.contains(Solution(solution_node))){
-					previouslySeenSolutions.add(Solution(solution_node));
-					previouslySeenSolutionCosts.add(solution_node.path_cost);
-					minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
-				// Stop searching for solutions once the cost optimal one is found
-				}else if(solution_node.path_cost == 536.0){
-					System.out.println("Solution found at " + iterator + " expansions.");
+				// Iterate while the solutions being generated are unique
+				if(cumulativeSolutions.containsKey(Solution(solution_node))){
 					break;
+				}else{
+					if(solution_node.path_cost < minCost){
+						minCost = solution_node.path_cost;
+						optimalSolution = Solution(solution_node);
+						//System.out.println(optimalSolution);
+					}
+					cumulativeSolutions.put(Solution(solution_node), solution_node.path_cost);
 				}
-				iterator ++;
+			// 	System.out.println(Solution(solution_node));
+			// 	// Insert all solution paths that lead to the goal state and keep track of previously seen solutions.
+			// 	if(!previouslySeenSolutions.contains(Solution(solution_node))){
+			// 		previouslySeenSolutions.add(Solution(solution_node));
+			// 		previouslySeenSolutionCosts.add(solution_node.path_cost);
+			// 		minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
+			// 	// Stop searching for solutions once the cost optimal one is found
+			// }else if(solution_node.path_cost < 1536.0){
+			// 		System.out.println("Solution found at " + iterator + " expansions.");
+			// 		break;
+			// 	}
+			// 	iterator ++;
 			}
+			iteration ++;
+			//System.out.println(iteration);
 		}
 		// Return the cost optimal solution
-		return previouslySeenSolutions.get(minIndex);
+		//return previouslySeenSolutions.get(minIndex);
+		return optimalSolution;
 	}
+
 
 	//For statistics purposes
 	int count; //count expansions
@@ -166,7 +186,6 @@ public class Search {
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
 				frontier.insertAll(Expand(node, problem));
-				//count++;
 			}
 
 			// Following code is just for visualization of explored nodes at each step
@@ -219,7 +238,6 @@ public class Search {
 		}
 	}
 
-	/*Henri is working on the method below*/
 	private Node GraphSearchDepthLimited(Frontier frontier, int limit) {
 
 		// Initialize the expansion count to 0 before starting
@@ -244,9 +262,11 @@ public class Search {
 				Node node = frontier.remove();
 
 				// If the state of the node is not explored and if the depth is less than the limit
-				if(!explored.contains(node.state) && count <= limit) {
+				if(!explored.contains(node.state) && count < limit) {
 					explored.add(node.state);
 					frontier.insertAll(Expand(node, problem));
+					// Increment the number of expansions
+					count ++;
 				}
 
 				// Print testing lines: At each loop print the contents of the visited nodes list
@@ -262,9 +282,6 @@ public class Search {
 					//System.out.println(Solution(node));
 					return node;
 				}
-
-				// Increment the number of expansions
-				count++;
 			}
 		}
 	}

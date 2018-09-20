@@ -102,10 +102,10 @@ public class ProblemMap extends Problem {
 		ProblemMap problem = new ProblemMap("../romania.txt","../romaniaSLD.txt");
 		ProblemMap problem1 = new ProblemMap("../romania.txt");
 
-		problem.initialState = "Timisoara";
+		problem.initialState = "Arad";
 		problem.goalState = "Bucharest";
 
-		problem1.initialState = "Timisoara";
+		problem1.initialState = "Arad";
 		problem1.goalState = "Bucharest";
 
 		Search search  = new Search(problem);

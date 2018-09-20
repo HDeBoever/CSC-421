@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class Search {
 
@@ -118,24 +119,10 @@ public class Search {
 					}
 					cumulativeSolutions.put(Solution(solution_node), solution_node.path_cost);
 				}
-			// 	System.out.println(Solution(solution_node));
-			// 	// Insert all solution paths that lead to the goal state and keep track of previously seen solutions.
-			// 	if(!previouslySeenSolutions.contains(Solution(solution_node))){
-			// 		previouslySeenSolutions.add(Solution(solution_node));
-			// 		previouslySeenSolutionCosts.add(solution_node.path_cost);
-			// 		minIndex = previouslySeenSolutionCosts.indexOf(Collections.min(previouslySeenSolutionCosts));
-			// 	// Stop searching for solutions once the cost optimal one is found
-			// }else if(solution_node.path_cost < 1536.0){
-			// 		System.out.println("Solution found at " + iterator + " expansions.");
-			// 		break;
-			// 	}
-			// 	iterator ++;
 			}
 			iteration ++;
-			//System.out.println(iteration);
 		}
 		// Return the cost optimal solution
-		//return previouslySeenSolutions.get(minIndex);
 		return optimalSolution;
 	}
 
@@ -185,17 +172,22 @@ public class Search {
 			Node node = frontier.remove();
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
+
+				// print the frontier here with the help of the print tree function
+				//System.out.println(frontier.getClass().getName());
+				PrintTree(frontier);
+
 				frontier.insertAll(Expand(node, problem));
 			}
 
-			// Following code is just for visualization of explored nodes at each step
-			System.out.println("\nCurrent Set of Explored Nodes:");
-			System.out.print("{ ");
-			for (Object obj : explored){
-				System.out.print(obj + " ");
-			}
-			System.out.print("}");
-			System.out.println();
+			// // Following code is just for visualization of explored nodes at each step
+			// System.out.println("\nCurrent Set of Explored Nodes:");
+			// System.out.print("{ ");
+			// for (Object obj : explored){
+			// 	System.out.print(obj + " ");
+			// }
+			// System.out.print("}");
+			// System.out.println();
 
 			// If the state of the current node is the problem's goal state, return the solution
 			if( problem.goal_test(node.state) ){
@@ -316,7 +308,7 @@ public class Search {
 	// This function creates a string to print the solution.
 	private String Solution(Node node) {
 
-		String solution_str = "\nOptimal Route:\n(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";
+		String solution_str = "\nOptimal Route Found:\n(cost = " + node.path_cost + ", frontier expansions = " + count + ")    ";
 		Deque<Object> solution = new ArrayDeque<Object>();
 		do {
 			solution.push(node.state);
@@ -330,5 +322,22 @@ public class Search {
 				solution_str += solution.pop() + " ---> ";
 			}
 		return solution_str;
+	}
+
+	// This function is used to print the tree in the command line in a nested format
+	// Input should be a frontier
+	public void PrintTree(Frontier f){
+		// System.out.println("\n\nPrinting the tree now!");
+
+		while(!f.isEmpty()){
+			Node node = f.remove();
+			int depth = node.depth;
+			// Print out the same number of tabs as the depth to show the tree layers in the command line
+			for(int  i = 0; i < depth; i ++){
+				System.out.print("\t");
+			}
+			System.out.println(node.state + " " + node.path_cost + " order: " + depth);
+			//System.out.print(f.remove().getClass().getName());
+		}
 	}
 }

@@ -102,10 +102,10 @@ public class ProblemMap extends Problem {
 		ProblemMap problem = new ProblemMap("../romania.txt","../romaniaSLD.txt");
 		ProblemMap problem1 = new ProblemMap("../romania.txt");
 
-		problem.initialState = "Arad";
+		problem.initialState = "Timisoara";
 		problem.goalState = "Bucharest";
 
-		problem1.initialState = "Arad";
+		problem1.initialState = "Timisoara";
 		problem1.goalState = "Bucharest";
 
 		Search search  = new Search(problem);
@@ -142,11 +142,9 @@ public class ProblemMap extends Problem {
 		// A* implementations only work when the straight-line-distance file for Romania is read into the constructor
 		// for the ProblemMap Object instance.
 		System.out.println("\n\nA-Star Tree Search:----------------------------------------\n");
-		System.out.println(search.BreadthFirstGraphSearch());
+		System.out.println(search.AstarTreeSearch());
 		System.out.println("\n\nA-Star Graph Search:----------------------------------------\n");
 		System.out.println(search.AstarGraphSearch());
-		//
-		// System.out.println("BreadthFirstTreeSearch:\t\t" + search1.BreadthFirstTreeSearch());
-		// System.out.println("BreadthFirstGraphSearch:\t" + search1.BreadthFirstGraphSearch());
+
 	}
 }

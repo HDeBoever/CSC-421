@@ -175,19 +175,19 @@ public class Search {
 
 				// print the frontier here with the help of the print tree function
 				//System.out.println(frontier.getClass().getName());
-				PrintTree(frontier);
+				//PrintTree(frontier);
 
 				frontier.insertAll(Expand(node, problem));
 			}
 
-			// // Following code is just for visualization of explored nodes at each step
-			// System.out.println("\nCurrent Set of Explored Nodes:");
-			// System.out.print("{ ");
-			// for (Object obj : explored){
-			// 	System.out.print(obj + " ");
-			// }
-			// System.out.print("}");
-			// System.out.println();
+			// Following code is just for visualization of explored nodes at each step
+			System.out.println("\nCurrent Set of Explored Nodes:");
+			System.out.print("{ ");
+			for (Object obj : explored){
+				System.out.print(obj + " ");
+			}
+			System.out.print("}");
+			System.out.println();
 
 			// If the state of the current node is the problem's goal state, return the solution
 			if( problem.goal_test(node.state) ){

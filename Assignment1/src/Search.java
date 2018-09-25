@@ -133,7 +133,7 @@ public class Search {
 	Node initialNode; //initial node based on initial state
 
 	private String TreeSearch(Frontier frontier) {
-		count = 0;
+		int ct = 0;
 		node_list = new ArrayList<Node>();
 
 		initialNode = MakeNode(problem.initialState);
@@ -143,15 +143,21 @@ public class Search {
 		while(true) {
 			if(frontier.isEmpty()) {
 				return null;
-			}
+            }
+            else {
+            }
 
 			Node node = frontier.remove();
 
-			if(problem.goal_test(node.state) )
+			if(problem.goal_test(node.state) ) {
 				return Solution(node);
+            }
+            else {
+            }
 
-			frontier.insertAll(Expand(node,problem));
-			count++;
+			Set<Node> willInsert = Expand(node,problem);
+			frontier.insertAll(willInsert);
+			ct++;
 		}
 	}
 

@@ -141,22 +141,14 @@ public class Search {
 
 		frontier.insert( initialNode );
 		while(true) {
-			if(frontier.isEmpty()) {
+			if(frontier.isEmpty())
 				return null;
-            }
-            else {
-            }
-
 			Node node = frontier.remove();
-
-			if(problem.goal_test(node.state) ) {
+			System.out.println();
+			PrintTree(node, node_list);
+			if(problem.goal_test(node.state))
 				return Solution(node);
-            }
-            else {
-            }
-
-			Set<Node> willInsert = Expand(node,problem);
-			frontier.insertAll(willInsert);
+			frontier.insertAll(Expand(node, problem));
 			ct++;
 		}
 	}
@@ -176,24 +168,25 @@ public class Search {
 			}
 
 			Node node = frontier.remove();
+			System.out.println();
+			PrintTree(node, node_list);
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
 
 				// print the frontier here with the help of the print tree function
 				//System.out.println(frontier.getClass().getName());
-				//PrintTree(frontier);
 
 				frontier.insertAll(Expand(node, problem));
 			}
 
 			// Following code is just for visualization of explored nodes at each step
-			System.out.println("\nCurrent Set of Explored Nodes:");
-			System.out.print("{ ");
-			for (Object obj : explored){
-				System.out.print(obj + " ");
-			}
-			System.out.print("}");
-			System.out.println();
+			//System.out.println("\nCurrent Set of Explored Nodes:");
+			//System.out.print("{ ");
+			//for (Object obj : explored){
+			//	System.out.print(obj + " ");
+			//}
+			//System.out.print("}");
+			//System.out.println();
 
 			// If the state of the current node is the problem's goal state, return the solution
 			if( problem.goal_test(node.state) ){
@@ -221,9 +214,11 @@ public class Search {
 
 			//Remove n from the frontier (pops from lifo)
 			Node node = frontier.remove();
-
+			System.out.println();
+			PrintTree(node, node_list);
 			//If n contains the goal state then return the corresponding solution
 			if(problem.goal_test(node.state) ) {
+				//PrintTree(node, frontier);
 				return node;
 			}
 			else if( count < limit ) {
@@ -258,7 +253,8 @@ public class Search {
 
 				// remove a node from the frontier
 				Node node = frontier.remove();
-
+				PrintTree(node, node_list);
+				System.out.println();
 				// If the state of the node is not explored and if the depth is less than the limit
 				if(!explored.contains(node.state) && count < limit) {
 					explored.add(node.state);
@@ -331,19 +327,22 @@ public class Search {
 	}
 
 	// This function is used to print the tree in the command line in a nested format
-	// Input should be a frontier
-	public void PrintTree(Frontier f){
+	public void PrintTree(Node n, List<Node> list){
 		// System.out.println("\n\nPrinting the tree now!");
 
-		while(!f.isEmpty()){
-			Node node = f.remove();
-			int depth = node.depth;
-			// Print out the same number of tabs as the depth to show the tree layers in the command line
-			for(int  i = 0; i < depth; i ++){
-				System.out.print("\t");
+		//Print a number os spaces or tabs equal to n.depth
+		for(int i = 0; i < n.depth; i++){
+			System.out.print(" ");
+		}
+
+		// Print the info about the node
+		double cost = n.path_cost + problem.h(n.state);
+		System.out.println(n.state + " " + n.path_cost + " " + problem.h(n.state) + " (" + cost + ") " + n.depth);
+
+		for(Node m : list){
+			if(m.parent_node == n){
+				PrintTree(m, list);
 			}
-			System.out.println(node.state + " " + node.path_cost + " order: " + depth);
-			//System.out.print(f.remove().getClass().getName());
 		}
 	}
 }

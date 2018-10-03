@@ -412,3 +412,13 @@ Search Strategies and metrics for good searching algorithms:
 		|  |	|_|
 		|  |
 		|_  |_
+
+
+Class notes: Adversarial Search
+
+Two or more players acting rationally in a zero sum game, Go, Chess, tic-tac-toe, etc.
+Computers play chess using variations of brute force graph searches. The branching factor for chess is about 36 for each state.
+This results in 36^80 possible states! Too large!
+
+Limited look ahead and scoring, assign a score based on some features of the states in question at a limited depth.
+Min-Max example: pick the move that gives us the best guaranteed score, independent of what our opponent does.

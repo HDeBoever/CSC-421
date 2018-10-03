@@ -1,0 +1,91 @@
+Graph Search Depth Limited:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 536.0, frontier expansions = 5)    Timisoara ---> Arad ---> Sibiu ---> Rimnicu ---> Pitesti ---> Bucharest
+
+
+
+
+
+Tree Search Depth Limited:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 568.0, frontier expansions = 4)    Timisoara ---> Arad ---> Sibiu ---> Fagaras ---> Bucharest
+
+
+
+
+
+Breadth First Tree Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 568.0, frontier expansions = 6)    Timisoara ---> Arad ---> Sibiu ---> Fagaras ---> Bucharest
+
+
+
+
+
+Breadth First Graph Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 568.0, frontier expansions = 24)    Timisoara ---> Arad ---> Sibiu ---> Fagaras ---> Bucharest
+
+
+
+
+
+Depth First Tree Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 4847.0, frontier expansions = 24)    Timisoara ---> Lugoj ---> Mehadia ---> Lugoj ---> Timisoara ---> 
+Lugoj ---> Timisoara ---> Lugoj ---> Timisoara ---> Lugoj ---> Mehadia ---> Lugoj ---> Timisoara ---> Arad ---> Zerind ---> 
+Arad ---> Sibiu ---> Rimnicu ---> Craiova ---> Pitesti ---> Craiova ---> Drobeta ---> Craiova ---> Drobeta ---> Mehadia ---> 
+Lugoj ---> Mehadia ---> Lugoj ---> Mehadia ---> Lugoj ---> Mehadia ---> Lugoj ---> Mehadia ---> Drobeta ---> Mehadia ---> 
+Drobeta ---> Craiova ---> Drobeta ---> Craiova ---> Pitesti ---> Craiova ---> Drobeta ---> Craiova ---> Drobeta ---> Craiova ---> 
+Pitesti ---> Rimnicu ---> Pitesti ---> Bucharest
+
+
+
+
+
+Depth First Graph Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 568.0, frontier expansions = 4)    Timisoara ---> Arad ---> Sibiu ---> Fagaras ---> Bucharest
+
+
+
+
+
+Uniform Cost Tree Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 536.0, frontier expansions = 4)    Timisoara ---> Arad ---> Sibiu ---> Rimnicu ---> Pitesti ---> Bucharest
+
+
+
+
+
+Uniform Cost Graph Search:----------------------------------------
+
+
+
+Optimal Route Found:
+(cost = 536.0, frontier expansions = 28)    Timisoara ---> Arad ---> Sibiu ---> Rimnicu ---> Pitesti ---> Bucharest
+
+
+

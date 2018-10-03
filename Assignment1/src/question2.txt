@@ -1,0 +1,120 @@
+Greedy Best Tree Search:----------------------------------------
+
+
+
+Timisoara 0.0 329.0 (329.0) 0
+ 
+ Lugoj 111.0 244.0 (355.0) 1
+  
+  Mehadia 181.0 241.0 (422.0) 2
+   
+   Drobeta 256.0 242.0 (498.0) 3
+    
+    Craiova 376.0 160.0 (536.0) 4
+     
+     Pitesti 514.0 100.0 (614.0) 5
+      
+      Bucharest 615.0 0.0 (615.0) 6
+
+
+
+Optimal Route Found:
+(cost = 615.0, frontier expansions = 0)    Timisoara ---> Lugoj ---> Mehadia ---> Drobeta ---> Craiova ---> Pitesti ---> Bucharest
+
+
+
+
+Greedy Best Graph Search:----------------------------------------
+
+
+
+Timisoara 0.0 329.0 (329.0) 0
+ 
+ Lugoj 111.0 244.0 (355.0) 1
+  
+  Mehadia 181.0 241.0 (422.0) 2
+   
+   Drobeta 256.0 242.0 (498.0) 3
+    
+    Craiova 376.0 160.0 (536.0) 4
+     
+     Pitesti 514.0 100.0 (614.0) 5
+      
+      Bucharest 615.0 0.0 (615.0) 6
+
+
+
+Optimal Route Found:
+(cost = 615.0, frontier expansions = 6)    Timisoara ---> Lugoj ---> Mehadia ---> Drobeta ---> Craiova ---> Pitesti ---> Bucharest
+
+
+
+
+A-Star Tree Search:----------------------------------------
+
+
+
+Timisoara 0.0 329.0 (329.0) 0
+ 
+ Lugoj 111.0 244.0 (355.0) 1
+  
+  Mehadia 181.0 241.0 (422.0) 2
+ 
+ Arad 118.0 366.0 (484.0) 1
+   
+   Lugoj 251.0 244.0 (495.0) 3
+   
+   Drobeta 256.0 242.0 (498.0) 3
+  
+  Sibiu 258.0 253.0 (511.0) 2
+   
+   Rimnicu 338.0 193.0 (531.0) 3
+   
+   Fagaras 357.0 176.0 (533.0) 3
+    
+    Pitesti 435.0 100.0 (535.0) 4
+    
+    Craiova 376.0 160.0 (536.0) 4
+     
+     Bucharest 536.0 0.0 (536.0) 5
+
+
+
+Optimal Route Found:
+(cost = 536.0, frontier expansions = 6)    Timisoara ---> Arad ---> Sibiu ---> Rimnicu ---> Pitesti ---> Bucharest
+
+
+
+
+A-Star Graph Search:----------------------------------------
+
+
+
+Timisoara 0.0 329.0 (329.0) 0
+ 
+ Lugoj 111.0 244.0 (355.0) 1
+  
+  Mehadia 181.0 241.0 (422.0) 2
+ 
+ Arad 118.0 366.0 (484.0) 1
+   
+   Lugoj 251.0 244.0 (495.0) 3
+   
+   Drobeta 256.0 242.0 (498.0) 3
+  
+  Sibiu 258.0 253.0 (511.0) 2
+   
+   Rimnicu 338.0 193.0 (531.0) 3
+   
+   Fagaras 357.0 176.0 (533.0) 3
+    
+    Pitesti 435.0 100.0 (535.0) 4
+    
+    Craiova 376.0 160.0 (536.0) 4
+     
+     Bucharest 536.0 0.0 (536.0) 5
+
+
+
+Optimal Route Found:
+(cost = 536.0, frontier expansions = 11)    Timisoara ---> Arad ---> Sibiu ---> Rimnicu ---> Pitesti ---> Bucharest

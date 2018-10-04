@@ -37,7 +37,7 @@ public class Search {
 	}
 
 	// If the heuristics function is admissible, A* using tree search is optimal
-	// An admissible heuristic never iverestimates the cost of getting to the goal, i.e. It is optimistic
+	// An admissible heuristic never overestimates the cost of getting to the goal, i.e. It is optimistic
 	public String AstarTreeSearch() {
 		return TreeSearch(new FrontierPriorityQueue(new ComparatorF(problem)));
 	}
@@ -135,17 +135,15 @@ public class Search {
 	private String TreeSearch(Frontier frontier) {
 		int ct = 0;
 		node_list = new ArrayList<Node>();
-
 		initialNode = MakeNode(problem.initialState);
 		node_list.add( initialNode );
-
 		frontier.insert( initialNode );
+
 		while(true) {
 			if(frontier.isEmpty())
 				return null;
 			Node node = frontier.remove();
-			System.out.println();
-			PrintTree(node, node_list);
+			//PrintTree(node, node_list);
 			if(problem.goal_test(node.state))
 				return Solution(node);
 			frontier.insertAll(Expand(node, problem));
@@ -162,20 +160,16 @@ public class Search {
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		frontier.insert( initialNode );
 		while(true) {
-
 			if(frontier.isEmpty()){
 				return null;
 			}
 
 			Node node = frontier.remove();
-			System.out.println();
-			PrintTree(node, node_list);
+			//PrintTree(node, node_list);
 			if(!explored.contains(node.state) ) {
 				explored.add(node.state);
-
 				// print the frontier here with the help of the print tree function
 				//System.out.println(frontier.getClass().getName());
-
 				frontier.insertAll(Expand(node, problem));
 			}
 
@@ -214,8 +208,8 @@ public class Search {
 
 			//Remove n from the frontier (pops from lifo)
 			Node node = frontier.remove();
-			System.out.println();
-			PrintTree(node, node_list);
+			//System.out.println();
+			//PrintTree(node, node_list);
 			//If n contains the goal state then return the corresponding solution
 			if(problem.goal_test(node.state) ) {
 				//PrintTree(node, frontier);
@@ -253,8 +247,8 @@ public class Search {
 
 				// remove a node from the frontier
 				Node node = frontier.remove();
-				PrintTree(node, node_list);
-				System.out.println();
+				//PrintTree(node, node_list);
+				//System.out.println();
 				// If the state of the node is not explored and if the depth is less than the limit
 				if(!explored.contains(node.state) && count < limit) {
 					explored.add(node.state);
@@ -330,7 +324,7 @@ public class Search {
 	public void PrintTree(Node n, List<Node> list){
 		// System.out.println("\n\nPrinting the tree now!");
 
-		//Print a number os spaces or tabs equal to n.depth
+		//Print a number of spaces or tabs equal to n.depth
 		for(int i = 0; i < n.depth; i++){
 			System.out.print(" ");
 		}

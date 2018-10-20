@@ -11,16 +11,16 @@ public class GameNim extends Game {
 
 	//char marks[] = {'O', 'X'}; //'O' for computer, 'X' for human
 
-//    int winningLines[][] = {
-//        { 1, 2, 3 },
-//        { 4, 5, 6 },
-//        { 7, 8, 9 },
-//        { 1, 4, 7 },
-//        { 2, 5, 8 },
-//        { 3, 6, 9 },
-//        { 1, 5, 9 },
-//        { 3, 5, 7 }
-//    };
+//int winningLines[][] = {
+//{ 1, 2, 3 },
+//{ 4, 5, 6 },
+//{ 7, 8, 9 },
+//{ 1, 4, 7 },
+//{ 2, 5, 8 },
+//{ 3, 6, 9 },
+//{ 1, 5, 9 },
+//{ 3, 5, 7 }
+//};
 
 	int WinningScore = 10;
 	int LosingScore = -10;
@@ -47,18 +47,18 @@ public class GameNim extends Game {
 		return false;
 
 
-//        char mark = marks[previous_player];
+//char mark = marks[previous_player];
 //
-//        for (int i = 0; i < winningLines.length; i++) {
+//for (int i = 0; i < winningLines.length; i++) {
 //
-//            if (mark == tstate.board[winningLines[i][0]]
-//             && mark == tstate.board[winningLines[i][1]]
-//             && mark == tstate.board[winningLines[i][2]]) {
+//if (mark == tstate.board[winningLines[i][0]]
+// && mark == tstate.board[winningLines[i][1]]
+// && mark == tstate.board[winningLines[i][2]]) {
 //
-//            	return true;
-//            }
-//        }
-//        return false;
+//	return true;
+//}
+//}
+//return false;
 	}
 
 	public boolean isStuckState(State state) {
@@ -67,13 +67,13 @@ public class GameNim extends Game {
 			return false;
 
 		return false;
-//        StateNim tstate = (StateNim) state;
+//StateNim tstate = (StateNim) state;
 //
-//        for (int i=1; i<=9; i++)
-//            if ( tstate.board[i] == ' ' )
-//                return false;
+//for (int i=1; i<=9; i++)
+//if ( tstate.board[i] == ' ' )
+//return false;
 //
-//        return true;
+//return true;
 	}
 
 
@@ -170,31 +170,31 @@ public class GameNim extends Game {
 			StateNim 	nextState = null;
 
 			switch ( game.currentState.player ) {
-			  case 1: //Human
+			case 1: //Human
 
-				  //get human's move
-				  System.out.print("\n\nEnter the number of coins to take from the table> ");
-				  int pos = Integer.parseInt( in.readLine() );
+				//get human's move
+				System.out.print("\n\nEnter the number of coins to take from the table> ");
+				int pos = Integer.parseInt( in.readLine() );
 
-				  if(pos > 3 || pos < 1){
-					  System.out.println("Not a vaild number of coins to take!!!\nPlease take 1,2 or 3 coins");
-					  continue;
-				  }else{
+				if(pos > 3 || pos < 1){
+					System.out.println("Not a vaild number of coins to take!!!\nPlease take 1,2 or 3 coins");
+					continue;
+				}else{
 
-				  nextState = new StateNim((StateNim)game.currentState);
-				  nextState.player = 1;
-				  nextState.board[TABLE_COINS] -= pos;
-				  nextState.board[HUMAN_COINS_IDX] += pos;
-				  System.out.println("State after Human move: \n" + nextState);
-				  break;
+				nextState = new StateNim((StateNim)game.currentState);
+				nextState.player = 1;
+				nextState.board[TABLE_COINS] -= pos;
+				nextState.board[HUMAN_COINS_IDX] += pos;
+				System.out.println("State after Human move: \n" + nextState);
+				break;
 				}
 
-			  case 0: //Computer
+			case 0: //Computer
 
-				  nextState = (StateNim)search.bestSuccessorState(depth);
-				  nextState.player = 0;
-				  System.out.println("State after Computer move: \n" + nextState);
-				  break;
+				nextState = (StateNim)search.bestSuccessorState(depth);
+				nextState.player = 0;
+				System.out.println("State after Computer move: \n" + nextState);
+				break;
 			}
 
 			game.currentState = nextState;

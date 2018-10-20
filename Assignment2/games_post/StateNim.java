@@ -50,7 +50,7 @@ public class StateNim extends State {
     public String getTableStateVisual(int tableCoins) {
         String ret = "";
         switch(tableCoins) {
-            case 13: ret = "_____NIM_____\n|           |\n|  O O O O  |\n| O O O O  O|\n|  O O O O  |\n|___________|\n";
+            case 13: ret = "_____NIM_____\n|           |\n|  O O O O  |\n| O O O O O |\n|  O O O O  |\n|___________|\n";
             break;
             case 12: ret = "_____NIM_____\n|           |\n|  O O O O  |\n| O O   O O |\n|  O O O O  |\n|___________|\n";
             break;

@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;
 import java.lang.Math;
+import java.util.Map;
 
 public class CSPWaterZebra extends CSP {
 
@@ -258,6 +259,8 @@ public class CSPWaterZebra extends CSP {
 	   }
 
 		Search search = new Search(csp);
-		System.out.println(search.BacktrackingSearch());
+		Map<Object,Object> result = search.BacktrackingSearch();
+		System.out.println(result);
+		System.out.println("Based on the fourteen constraints, the zebra lives in house: " + result .get("zebra") + " and they drink water in house " + result.get("water"));
 	}
 }

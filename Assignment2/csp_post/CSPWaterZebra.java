@@ -58,6 +58,8 @@ public class CSPWaterZebra extends CSP {
 
 		// 5.The green house is directly to the right of the ivory house.
 		// -Harder to model: subtraction to determine a unary constraint (ie green = 1? or 2? etc)
+		if( X.equals("green") && Y.equals("ivory") && !( (Integer.parseInt((String)x) - Integer.parseInt((String)y)) == 1) )
+			return false;
 
 		// 6.The Old-Gold smoker owns snails.
 		if( X.equals("old-gold") && Y.equals("snail") && !(Integer.parseInt((String)x) == Integer.parseInt((String)y)))
